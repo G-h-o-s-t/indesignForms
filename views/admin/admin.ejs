@@ -7,7 +7,7 @@
     .center{ width: 768px; margin: auto; }
     .logut{ float: right; padding: 20px; }
     .logut a{ color: #333;}
-    input{ line-height: 21px; padding: 0 5px;}
+    input{ line-height: 21px; padding: 0 5px; font-size: 14px;}
     .hide{ display:none; }
     .tab{ line-height: 21px;
         cursor: pointer;
@@ -20,9 +20,14 @@
     .tab.active{  text-decoration: underline; background-color: #eee;}
     i.clear{ display: block; height: 0; clear: both;}
     .users, .clients, .catalog{ padding: 20px; border: 1px solid #ccc; }
-    form{ padding: 20px; display: block; background: #e2e2e2}
+    .greyTab, form{ padding: 20px; display: block; background: #e2e2e2}
     h2{ margin: 20px 0}
     .line{ padding: 10px 0}
+    ul{ display: block; margin-top: 15px; }
+    ul li{ list-style-type: decimal; margin-left: 20px;}
+    li i{ font-size: 10px; text-decoration: underline; cursor: pointer; font-style: normal; }
+    i.splitline{ border-bottom: 1px solid #ccc; height: 0; display: block; margin: 10px;}
+    button{ line-height: 19px; font-size: 14px; cursor: pointer; }
 </style>
 <script type="text/javascript">
 setTimeout(function sunrise () {
@@ -42,7 +47,7 @@ setTimeout(function sunrise () {
         <div class="tab">Каталог</div>
         <i class="clear"></i>
     </div>
-    <div class="users hide">
+    <div class="users hide)">
         <div class="addTab">
             <h2>Добавление пользователя:</h2>
             <form role="form" action="/auth/local/register" method="post">
@@ -104,30 +109,40 @@ setTimeout(function sunrise () {
     </div>
     <div class="catalog">
         <h2>Каталог ресурсов:</h2>
-        <form role="form" action="/admin/addCatalog" method="post">
+
+    <div class="greyTab">
             <div class="line">
-                <input type="text" name="descr" placeholder="Название категории">
-                <input type="text" name="email" placeholder="Email">
-                <input type="password" name="password" placeholder="Password">
+                <h4>Доступные категории:</h4>
+                <ul>
+                    <li>Визитные карточки <i>удалить</i></li>
+                    <li>Бланки <i>удалить</i></li>
+                    <li>Папки <i>удалить</i></li>
+                </ul>
             </div>
-            <div class="line">
-                <label for="type">Тип пользователя</label>
-                <select name="type" id="type">
-                    <option value="registred">обычный</option>
-                    <option value="admin">админ</option>
-                </select>
-                <label for="active">Статус:</label>
-                <select name="active" id="active">
-                    <option value="true">активный</option>
-                    <option value="false">выключен</option>
-                </select>
-                <select name="client" id="client">
-                    <option value="client1">client1</option>
-                </select>
-            </div>
-            <br/>
+            <input type="text" name="descr" placeholder="Название категории">
             <button type="submit">Добавить</button>
-        </form>
+            <i class="splitline"></i>
+            <div class="line">
+                <h4>Доступные типы:</h4>
+                <label for="type">В категории:</label>
+                <select name="form" id="form">
+                    <option value="bcards">Визитные карточки</option>
+                    <option value="blank">Бланки</option>
+                </select>
+                <ul>
+                    <li>Основная персональная визитная карточка <i>удалить</i></li>
+                    <li>Корпоративная визитная карточка <i>удалить</i></li>
+                    <li>Визитная карточка для фирменного ювелирного магазина <i>удалить</i></li>
+                </ul>
+            </div>
+            <div class="line">
+                <label for="type">Новый тип:</label>
+                <input type="text" id="type" name="descr" placeholder="Название типа"/>
+                <button type="submit">Добавить</button>
+            </div>
+
+
+        </div>
     </div>
 
 </div>
