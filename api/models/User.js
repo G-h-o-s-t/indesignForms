@@ -3,9 +3,12 @@ var User = {
   schema: true,
 
   attributes: {
+
     username  : { type: 'string', unique: true },
     email     : { type: 'email',  unique: true },
-    passports : { collection: 'Passport', via: 'user' }
+    passports : { collection: 'Passport', via: 'user' },
+    active    : { type: 'boolean',  unique: false },
+    type      : { type: 'string', unique: false }
   }
 };
 
