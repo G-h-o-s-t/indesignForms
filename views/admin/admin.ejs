@@ -19,6 +19,7 @@
     .tab.active:hover,.tab:hover{ color: #000;  background-color: #ccc;}
     .tab.active{  text-decoration: underline; background-color: #eee;}
     i.clear{ display: block; height: 0; clear: both;}
+    .fr{float: right;}
     .users, .clients, .catalog{ padding: 20px; border: 1px solid #ccc; }
     .greyTab, form{ padding: 20px; display: block; background: #e2e2e2}
     h2{ margin: 20px 0}
@@ -28,123 +29,125 @@
     li i{ font-size: 10px; text-decoration: underline; cursor: pointer; font-style: normal; }
     i.splitline{ border-bottom: 1px solid #ccc; height: 0; display: block; margin: 10px;}
     button{ line-height: 19px; font-size: 14px; cursor: pointer; }
+    .smallWarn{ text-decoration: underline; cursor: pointer; color: red; font-size: 10px;}
 </style>
 <script type="text/javascript">
 setTimeout(function sunrise () {
     document.getElementsByClassName('header')[0].style.backgroundColor = '#118798';
 }, 0);
 </script>
-<div class="header">
+<div class="wrapper" ng-app="iidentic" ng-controller="admin">
+    <div class="header">
+        <div class="center">
+            <h1>Настройки клиентов и пользователей.</h1>
+        </div>
+    </div>
+    <div class="logut"><a href="/logout">logout</a></div>
     <div class="center">
-        <h1>Настройки клиентов и пользователей.</h1>
-    </div>
-</div>
-<div class="logut"><a href="/logout">logout</a></div>
-<div class="center">
-    <div>
-        <div class="tab active">Пользователи</div>
-        <div class="tab">Клиенты</div>
-        <div class="tab">Каталог</div>
-        <i class="clear"></i>
-    </div>
-    <div class="users hide)">
-        <div class="addTab">
-            <h2>Добавление пользователя:</h2>
-            <form role="form" action="/auth/local/register" method="post">
+        <div>
+            <div class="tab active">Пользователи</div>
+            <div class="tab">Клиенты</div>
+            <div class="tab">Каталог</div>
+            <i class="clear"></i>
+        </div>
+        <div class="users hide)">
+            <div class="addTab">
+                <h2>Добавление пользователя:</h2>
+                <form role="form" action="/auth/local/register" method="post">
+                    <div class="line">
+                        <input type="text" name="username" placeholder="Username">
+                        <input type="text" name="email" placeholder="Email">
+                        <input type="password" name="password" placeholder="Password">
+                    </div>
+                    <div class="line">
+                        <label for="type">Тип пользователя</label>
+                        <select name="type" id="type">
+                            <option value="registred">обычный</option>
+                            <option value="admin">админ</option>
+                        </select>
+                        <label for="active">Статус:</label>
+                        <select name="active" id="active">
+                            <option value="true">активный</option>
+                            <option value="false">выключен</option>
+                        </select>
+                        <select name="client" id="client">
+                            <option value="client1">client1</option>
+                        </select>
+                    </div>
+                    <br/>
+                    <button type="submit">Добавить</button>
+                </form>
+            </div>
+            <div class="viewTab">
+                <h2>Список пользователей</h2>
+                <table width="100%">
+                    <tr>
+                        <th>Имя</th>
+                        <th>почта</th>
+                        <th>тип</th>
+                        <th>активный</th>
+                        <th>клиент</th>
+                    </tr>
+                    <% for(var i=0,l=users.length; i<l; i++){ var user = users[i]; %>
+                    <tr>
+                        <td><%= user.username %></td>
+                        <td><%= user.email %></td>
+                        <td><%= user.type %></td>
+                        <td><%= user.active %></td>
+                        <td> - </td>
+                    </tr>
+                    <%}%>
+
+                </table>
+            </div>
+
+    <!--            Congratulation, you are registred! <br/>
+                <p>
+                    Username: <br/>
+                    Email:
+                </p>-->
+        </div>
+        <div class="clients hide">
+
+        </div>
+        <div class="catalog">
+            <span class="fr smallWarn" ng-click="restoreBack()">Восстановить данные по умолчанию (все затрет!)</span>
+            <h2>Каталог ресурсов:</h2>
+        <div class="greyTab">
                 <div class="line">
-                    <input type="text" name="username" placeholder="Username">
-                    <input type="text" name="email" placeholder="Email">
-                    <input type="password" name="password" placeholder="Password">
+                    <h4>Доступные категории:</h4>
+                    <ul>
+                        <li ng-repeat="form in forms track by $index">{{form.descr}}  <i ng-click="deleteForm( form )">удалить</i></li>
+<!--                        <li>Визитные карточки <i>удалить</i></li>
+                        <li>Бланки <i>удалить</i></li>
+                        <li>Папки <i>удалить</i></li>-->
+                    </ul>
+                </div>
+                <input type="text" name="descr" placeholder="Название категории" ng-model="formName" my-enter="addForm(formName)">
+                <button ng-click="addForm(formName)">Добавить</button>
+                <i class="splitline"></i>
+                <div class="line">
+                    <h4>Доступные типы:</h4>
+                    <label for="type">В категории:</label>
+                    <select name="form" id="form"
+                            ng-options="form.descr for form in forms track by form.name"
+                            ng-model="selectedOption"></select>
+
+                    <ul>
+                        <li ng-repeat="type in selectedOption.types track by $index">{{type}}  <i ng-click="delete(selectedOption, type)">удалить</i></li>
+                    </ul>
                 </div>
                 <div class="line">
-                    <label for="type">Тип пользователя</label>
-                    <select name="type" id="type">
-                        <option value="registred">обычный</option>
-                        <option value="admin">админ</option>
-                    </select>
-                    <label for="active">Статус:</label>
-                    <select name="active" id="active">
-                        <option value="true">активный</option>
-                        <option value="false">выключен</option>
-                    </select>
-                    <select name="client" id="client">
-                        <option value="client1">client1</option>
-                    </select>
+                    <label for="type">Новый тип:</label>
+                    <input type="text" id="type" name="descr" placeholder="Название типа" ng-model="typeName" my-enter="addType(selectedOption, typeName)"/>
+                    <button ng-click="addType(selectedOption, typeName)">Добавить</button>
                 </div>
-                <br/>
-                <button type="submit">Добавить</button>
-            </form>
-        </div>
-        <div class="viewTab">
-            <h2>Список пользователей</h2>
-            <table width="100%">
-                <tr>
-                    <th>Имя</th>
-                    <th>почта</th>
-                    <th>тип</th>
-                    <th>активный</th>
-                    <th>клиент</th>
-                </tr>
-                <% for(var i=0,l=users.length; i<l; i++){ var user = users[i]; %>
-                <tr>
-                    <td><%= user.username %></td>
-                    <td><%= user.email %></td>
-                    <td><%= user.type %></td>
-                    <td><%= user.active %></td>
-                    <td> - </td>
-                </tr>
-                <%}%>
 
-            </table>
+            <button class="fr" ng-click="save('zzz')">Сохранить</button>
+            <i class="clear"></i>
+            </div>
         </div>
 
-<!--            Congratulation, you are registred! <br/>
-            <p>
-                Username: <br/>
-                Email:
-            </p>-->
     </div>
-    <div class="clients hide">
-
-    </div>
-    <div class="catalog">
-        <h2>Каталог ресурсов:</h2>
-
-    <div class="greyTab">
-            <div class="line">
-                <h4>Доступные категории:</h4>
-                <ul>
-                    <li>Визитные карточки <i>удалить</i></li>
-                    <li>Бланки <i>удалить</i></li>
-                    <li>Папки <i>удалить</i></li>
-                </ul>
-            </div>
-            <input type="text" name="descr" placeholder="Название категории">
-            <button type="submit">Добавить</button>
-            <i class="splitline"></i>
-            <div class="line">
-                <h4>Доступные типы:</h4>
-                <label for="type">В категории:</label>
-                <select name="form" id="form">
-                    <option value="bcards">Визитные карточки</option>
-                    <option value="blank">Бланки</option>
-                </select>
-                <ul>
-                    <li>Основная персональная визитная карточка <i>удалить</i></li>
-                    <li>Корпоративная визитная карточка <i>удалить</i></li>
-                    <li>Визитная карточка для фирменного ювелирного магазина <i>удалить</i></li>
-                </ul>
-            </div>
-            <div class="line">
-                <label for="type">Новый тип:</label>
-                <input type="text" id="type" name="descr" placeholder="Название типа"/>
-                <button type="submit">Добавить</button>
-            </div>
-
-
-        </div>
-    </div>
-
 </div>
-
-
+<script type="text/javascript" src="/js/admin.js"></script>
