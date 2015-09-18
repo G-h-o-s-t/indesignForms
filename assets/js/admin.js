@@ -22,6 +22,16 @@ app.directive('myEnter', function () {
 });
 
 app.controller('admin', function ($scope) {
+
+    slug.defaults.modes['pretty'] = {
+        replacement: '-',
+        symbols: true,
+        remove: /[.]/g,
+        lower: false,
+        charmap: slug.charmap,
+        multicharmap: slug.multicharmap
+    };
+
     $scope.tab = 1;
 
     $scope.forms = [
@@ -45,7 +55,7 @@ app.controller('admin', function ($scope) {
     };
 
     $scope.addForm = function( what ){
-        $scope.forms.push({name:'needSlug', descr: what, types:[]});
+        $scope.forms.push({ name: slug(what), descr: what, types:[]});
         $scope.formName = '';
     };
 
