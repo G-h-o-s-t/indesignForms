@@ -7,7 +7,12 @@
 
 module.exports = {
 	index   : function( req, res ){
-        res.view('admin/admin',{ users: [1,2,3,4] });
+        User.find({},function(err, users){
+            if(err) return res.serverError(err);
+
+            res.view('admin/admin',{ users: users });
+        });
+
 //        res.send(200, 'Admin controller');
     }
 };

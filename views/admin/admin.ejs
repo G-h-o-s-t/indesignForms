@@ -19,7 +19,10 @@
     .tab.active:hover,.tab:hover{ color: #000;  background-color: #ccc;}
     .tab.active{  text-decoration: underline; background-color: #eee;}
     i.clear{ display: block; height: 0; clear: both;}
-    .users, .clients{ padding: 30px 20px; border: 1px solid #ccc; }
+    .users, .clients{ padding: 20px; border: 1px solid #ccc; }
+    form{ padding: 20px; display: block; background: #e2e2e2}
+    h2{ margin: 20px 0}
+    .line{ padding: 10px 0}
 </style>
 <script type="text/javascript">
 setTimeout(function sunrise () {
@@ -42,12 +45,12 @@ setTimeout(function sunrise () {
         <div class="addTab">
             <h2>Добавление пользователя:</h2>
             <form role="form" action="/auth/local/register" method="post">
-                <div>
+                <div class="line">
                     <input type="text" name="username" placeholder="Username">
                     <input type="text" name="email" placeholder="Email">
                     <input type="password" name="password" placeholder="Password">
                 </div>
-                <div>
+                <div class="line">
                     <label for="type">Тип пользователя</label>
                     <select name="type" id="type">
                         <option value="registred">обычный</option>
@@ -58,6 +61,9 @@ setTimeout(function sunrise () {
                         <option value="true">активный</option>
                         <option value="false">выключен</option>
                     </select>
+                    <select name="client" id="client">
+                        <option value="client1">client1</option>
+                    </select>
                 </div>
                 <br/>
                 <button type="submit">Добавить</button>
@@ -65,7 +71,25 @@ setTimeout(function sunrise () {
         </div>
         <div class="viewTab">
             <h2>Список пользователей</h2>
+            <table width="100%">
+                <tr>
+                    <th>Имя</th>
+                    <th>почта</th>
+                    <th>тип</th>
+                    <th>активный</th>
+                    <th>клиент</th>
+                </tr>
+                <% for(var i=0,l=users.length; i<l; i++){ var user = users[i]; %>
+                <tr>
+                    <td><%= user.username %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.type %></td>
+                    <td><%= user.active %></td>
+                    <td> - </td>
+                </tr>
+                <%}%>
 
+            </table>
         </div>
 
 <!--            Congratulation, you are registred! <br/>
