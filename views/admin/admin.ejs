@@ -19,7 +19,7 @@
     .tab.active:hover,.tab:hover{ color: #000;  background-color: #ccc;}
     .tab.active{  text-decoration: underline; background-color: #eee;}
     i.clear{ display: block; height: 0; clear: both;}
-    .users, .clients{ padding: 20px; border: 1px solid #ccc; }
+    .users, .clients, .catalog{ padding: 20px; border: 1px solid #ccc; }
     form{ padding: 20px; display: block; background: #e2e2e2}
     h2{ margin: 20px 0}
     .line{ padding: 10px 0}
@@ -39,9 +39,10 @@ setTimeout(function sunrise () {
     <div>
         <div class="tab active">Пользователи</div>
         <div class="tab">Клиенты</div>
+        <div class="tab">Каталог</div>
         <i class="clear"></i>
     </div>
-    <div class="users">
+    <div class="users hide">
         <div class="addTab">
             <h2>Добавление пользователя:</h2>
             <form role="form" action="/auth/local/register" method="post">
@@ -98,8 +99,35 @@ setTimeout(function sunrise () {
                 Email:
             </p>-->
     </div>
-    <div class="clients">
+    <div class="clients hide">
 
+    </div>
+    <div class="catalog">
+        <h2>Каталог ресурсов:</h2>
+        <form role="form" action="/admin/addCatalog" method="post">
+            <div class="line">
+                <input type="text" name="descr" placeholder="Название категории">
+                <input type="text" name="email" placeholder="Email">
+                <input type="password" name="password" placeholder="Password">
+            </div>
+            <div class="line">
+                <label for="type">Тип пользователя</label>
+                <select name="type" id="type">
+                    <option value="registred">обычный</option>
+                    <option value="admin">админ</option>
+                </select>
+                <label for="active">Статус:</label>
+                <select name="active" id="active">
+                    <option value="true">активный</option>
+                    <option value="false">выключен</option>
+                </select>
+                <select name="client" id="client">
+                    <option value="client1">client1</option>
+                </select>
+            </div>
+            <br/>
+            <button type="submit">Добавить</button>
+        </form>
     </div>
 
 </div>
