@@ -22,6 +22,7 @@ app.directive('myEnter', function () {
 });
 
 app.controller('admin', function ($scope) {
+    $scope.tab = 1;
 
     $scope.forms = [
         {name: 'bcards', descr: 'Визитные карточки', types: ['Основная персональная визитная карточка','Корпоративная визитная карточка','Визитная карточка для фирменного ювелирного магазина']},

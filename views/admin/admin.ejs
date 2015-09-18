@@ -15,9 +15,10 @@
         border: 1px solid #ccc;
         display: block; float: left;
         color: #333;
-        padding: 15px; border-bottom: 0!important;}
-    .tab.active:hover,.tab:hover{ color: #000;  background-color: #ccc;}
-    .tab.active{  text-decoration: underline; background-color: #eee;}
+        padding: 15px; border-bottom: 0!important;
+        background-color: #eee;}
+    .tab.active:hover,.tab:hover{ color: #000; background-color: #ccc;  }
+    .tab.active{  text-decoration: underline; background-color: #fff;}
     i.clear{ display: block; height: 0; clear: both;}
     .fr{float: right;}
     .users, .clients, .catalog{ padding: 20px; border: 1px solid #ccc; }
@@ -45,12 +46,12 @@ setTimeout(function sunrise () {
     <div class="logut"><a href="/logout">logout</a></div>
     <div class="center">
         <div>
-            <div class="tab active">Пользователи</div>
-            <div class="tab">Клиенты</div>
-            <div class="tab">Каталог</div>
+            <div class="tab" ng-class="{active:tab==1}" ng-click="tab=1">Пользователи</div>
+            <div class="tab" ng-class="{active:tab==2}" ng-click="tab=2">Клиенты</div>
+            <div class="tab" ng-class="{active:tab==3}" ng-click="tab=3">Каталог</div>
             <i class="clear"></i>
         </div>
-        <div class="users hide)">
+        <div class="users" ng-show="tab==1">
             <div class="addTab">
                 <h2>Добавление пользователя:</h2>
                 <form role="form" action="/auth/local/register" method="post">
@@ -107,10 +108,10 @@ setTimeout(function sunrise () {
                     Email:
                 </p>-->
         </div>
-        <div class="clients hide">
+        <div class="clients" ng-show="tab==2">
 
         </div>
-        <div class="catalog">
+        <div class="catalog" ng-show="tab==3">
             <span class="fr smallWarn" ng-click="restoreBack()">Восстановить данные по умолчанию (все затрет!)</span>
             <h2>Каталог ресурсов:</h2>
         <div class="greyTab">
