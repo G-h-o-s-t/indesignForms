@@ -1,4 +1,35 @@
-<!-- Default home page -->
+<div class="center">
+    <div class="logo"><img src="images/logoImg.jpg" width="140" height="140"/></div>
+    <div class="descr">Войдите используя аккаунт i-identic</div>
+    <div class="loginTab">
+        <div class="errorFlash">
+            <% if (errors) {%>
+            <% errors.forEach(function (error) { %>
+            <%= __(error) %>
+            <% }) %>
+            <% } %>
+        </div>
+        <form role="form" action="/auth/local" method="post">
+            <input type="text" name="identifier" placeholder="Имя пользователя или email">
+            <input type="password" name="password" placeholder="Пароль">
+            <button type="submit">Войти</button>
+        </form>
+
+<!--
+        <% if (Object.keys(providers).length) {%>
+        <h4>You can also use one of these...</h4>
+        <% Object.keys(providers).forEach(function (key) { %>
+        <a href="/auth/<%= providers[key].slug %>" role="button"><%= providers[key].name %></a>
+        <% }) %>
+        <% } %>
+-->
+    </div>
+</div>
+
+
+
+<!--
+&lt;!&ndash; Default home page &ndash;&gt;
 <link type="text/css" href='http://sailsjs.org/styles/fonts.css' rel='stylesheet'/>
 <style>
     /* Styles included inline since you'll probably be deleting this page anyway */
@@ -16,8 +47,8 @@ setTimeout(function sunrise () {
         <h3 class="container">You're looking at: <code><%= view.pathFromApp + '.' +view.ext %></code></h3>
     </div>
     <div class="main container clearfix">
-        <!-- <h1>Getting started</h1>
-        <p>Don't worry, we've got your back.</p> -->
+        &lt;!&ndash; <h1>Getting started</h1>
+        <p>Don't worry, we've got your back.</p> &ndash;&gt;
         <ul class="getting-started">
             <li class="clearfix">
                 <div class="step">
@@ -51,7 +82,7 @@ setTimeout(function sunrise () {
             </li>
         </ul>
         <div class="links">
-            <!-- <h3>Links</h3> -->
+            &lt;!&ndash; <h3>Links</h3> &ndash;&gt;
             <ul class="link-list">
 
                 <h4>Docs</h4>
@@ -72,3 +103,4 @@ setTimeout(function sunrise () {
         </div>
     </div>
 </div>
+-->
