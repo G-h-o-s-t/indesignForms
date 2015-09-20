@@ -1,9 +1,13 @@
 <!-- Default home page -->
-<link type="text/css" href='http://sailsjs.org/styles/fonts.css' rel='stylesheet'/>
+<link href='https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+<!--<link type="text/css" href='http://sailsjs.org/styles/fonts.css' rel='stylesheet'/>-->
 <style>
     /* Styles included inline since you'll probably be deleting this page anyway */
     html,body{ text-align:left;font-size:1em}html,body,img,form,textarea,input,fieldset,div,p,div,ul,li,ol,dl,dt,dd,h1,h2,h3,h4,h5,h6,pre,code{margin:0;padding:0}ul,li{list-style:none}img{display:block}a img{border:0}a{text-decoration:none;font-weight:normal;font-family:inherit}*:active,*:focus{outline:0;-moz-outline-style:none}
     h1,h2,h3,h4,h5,h6{font-weight:normal}div.clear{clear:both}.clearfix:after{clear:both;content:".";display:block;font-size:0;height:0;line-height:0;visibility:hidden}body{font-family:"Open Sans",Arial,sans-serif;font-weight:300;}.top-bar {width: 100%; background-color: #e4f0f1; padding: 15px 0;}.top-bar .container img {float: left;}.top-bar .container ul {float: right; padding-top: 25px;}.top-bar .container li {float: left; width: 125px; text-align: center; font-size: 15px; color:#000; font-weight: 600;}.top-bar .container a li:hover {color: #118798; -webkit-transition:color 200ms; -moz-transition:color 200ms; -o-transition:color 200ms;transition:color 200ms;}.container{width: 80%; max-width: 1200px; margin: auto;}div.header {-webkit-transition: 6s; -moz-transition: 6s; -o-transition: 6s;transition: 6s; background: rgba(4, 36, 41, 0.89) url(http://sailsjs.org/images/img_sailsShadow.png) no-repeat 42% bottom; padding: 100px 0 65px;}.header h1#main-title{color: #fff; font-weight: 300; font-size: 2.5em;}.header h3{color: #b1eef7; font-style: italic; font-weight: 300;}.header h3 code{font-style: normal!important; background-color: rgba(255,255,255,0.5); font-weight: 300; color:#0e6471; margin: 0px 5px;}div.main.container{padding: 50px 0;}h1 {color: #FFF; font-weight: 300;}code {font-size: inherit; font-family: 'Consolas', 'Monaco', monospace; padding:4px 5px 1px; background-color: #f3f5f7}a{color: #118798; font-weight: 300; text-decoration: underline;}a:hover {color: #0e6471; -webkit-transition:color 200ms; -moz-transition:color 200ms; -o-transition:color 200ms;transition:color 200ms;}p{line-height: 1.5em;}blockquote{background-color: #e4f0f1; padding: 25px; line-height: 1.5em; margin: 15px 0;}blockquote span{font-weight: 600; padding-right: 5px;}ul.getting-started{padding: 25px 75px 25px 0; width: 70%; float: left; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;}ul.getting-started li{padding: 25px 0;}ul.getting-started li h3 {padding-bottom: 10px; font-size: 25px; font-weight: 300;}.sprite{background:url(http://sailsjs.org/images/newapp.sprite.png) no-repeat; position: absolute; left: 0; top:0;}.getting-started .sprite{margin-left:10px;padding-left:60px;height:42px;width:0; float: left;}.getting-started .one{background-position:0 0}.getting-started .two{background-position:0 -42px}.getting-started .three{background-position:0 -83px}div.step {position: relative; padding-left: 70px; opacity: 0.9;}div.step:hover{ opacity: 1;}div.links {float: left; width: 30%; max-width: 325px; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; background-color: #f3f5f7; border: 1px solid #ebebeb; padding: 25px 45px 35px;}div.links h3 {color: #727272; text-align: center; font-size: 28px; font-weight: 300;}div.links h4 {color: #727272; font-size: 17px; font-weight: 600; padding: 15px 0 10px;}div.links .link-list a {text-decoration: none; font-weight: 400;}div.links .link-list a li {padding: 0px 0px 5px 10px;}div.default-page{min-width: 1200px;}.pocket{display:none;}
+    .fl{ float: left}
+    .fr{ float: right}
+    i.clear{ display: block; height: 0; clear: both;}
     .center{ width: 768px; margin: auto; }
     .logut{ float: right; padding: 20px; }
     .logut a{ color: #333;}
@@ -19,18 +23,28 @@
         background-color: #eee;}
     .tab.active:hover,.tab:hover{ color: #000; background-color: #ccc;  }
     .tab.active{  text-decoration: underline; background-color: #fff;}
-    i.clear{ display: block; height: 0; clear: both;}
-    .fr{float: right;}
+
+
     .users, .clients, .catalog{ padding: 20px; border: 1px solid #ccc; }
     .greyTab, form{ padding: 20px; display: block; background: #e2e2e2}
     h2{ margin: 20px 0}
     .line{ padding: 10px 0}
     ul{ display: block; margin-top: 15px; }
     ul li{ list-style-type: decimal; margin-left: 20px;}
-    li i{ font-size: 10px; text-decoration: underline; cursor: pointer; font-style: normal; }
+    li i{ font-size: 10px; text-decoration: underline; cursor: pointer; font-style: normal;font-weight: normal; }
     i.splitline{ border-bottom: 1px solid #ccc; height: 0; display: block; margin: 10px;}
     button{ line-height: 19px; font-size: 14px; cursor: pointer; }
     .smallWarn{ text-decoration: underline; cursor: pointer; color: red; font-size: 10px;}
+    .cliLine{ clear: both; }
+    .smallLi{ font-size: 13px; font-weight: normal; }
+    .lineli{ display: inline-block; border: 1px solid #e2e2e2; padding: 5px 10px; margin: 0 5px 0 0; background: #eee; font-weight: bold; }
+    .fieldsPopUp{ position: fixed; top: 40px; left: 50%; width: 768px; background: #fff; margin-left: -384px; padding: 40px; border-radius: 10px;
+        -webkit-box-shadow: 0px 0px 30px 0px rgba(50, 50, 50, 0.75);
+        -moz-box-shadow:    0px 0px 30px 0px rgba(50, 50, 50, 0.75);
+        box-shadow:         0px 0px 30px 0px rgba(50, 50, 50, 0.75);
+    }
+    .curpoi{ cursor: pointer;}
+    i.closePopUp{    position: absolute;  right: 8px;top: 15px;font-weight: bold;font-style: normal;width: 20px;height: 20px;display: block;cursor: pointer;}
 </style>
 <script type="text/javascript">
 setTimeout(function sunrise () {
@@ -101,15 +115,113 @@ setTimeout(function sunrise () {
 
                 </table>
             </div>
-
-    <!--            Congratulation, you are registred! <br/>
-                <p>
-                    Username: <br/>
-                    Email:
-                </p>-->
         </div>
-        <div class="clients" ng-show="tab==2">
 
+        <div class="clients" ng-show="tab==2">
+            <h2>Список клиентов:</h2>
+            <div class="clientsList">
+            <%if(clients.length){%>
+                <button>Добавить клиента</button>
+                <table width="100%">
+                    <tr>
+                        <th>Название клиента</th>
+                        <th>Описание клиента</th>
+                        <th>Пользователи</th>
+                        <th>активный</th>
+                    </tr>
+                    <% for(var i=0,l=clients.length; i<l; i++){ var client = clients[i]; %>
+                    <tr>
+                        <td><%= client.username %></td>
+                        <td><%= client.email %></td>
+                        <td><%= client.type %></td>
+                        <td><%= client.active %></td>
+                    </tr>
+                    <tr><td colspan="4"></td></tr>
+                    <%}%>
+                </table>
+            <%} else {%>
+
+                <div class="notFound" ng-hide="showAddCliForm">Клиентов нет</div>
+                <button ng-click="newClient()" ng-hide="showAddCliForm">Добавить клиента</button>
+
+                <div class="addCliForm" ng-show="showAddCliForm">
+                    <div class="line">
+                        <label for="cliName">Название клиента</label>
+                        <input type="text" name="cliName" id="cliName" ng-model="cliName"/>
+                        <label for="cliDescr">Описание</label>
+                        <input type="text" name="cliDescr" id="cliDescr" ng-model="cliDescr"/>
+                    </div>
+                    <div class="line">
+                        <label for="userSelect">Добавить пользователя к клиенту:</label>
+                        <select name="userSelect" id="userSelect"
+                                ng-options="user.username for user in users track by user.username"
+                                ng-model="selectedUser"></select>
+                        <button ng-click="addUserToClient(selectedUser)">добавить</button>
+                        <div class="usersInClient greyTab">
+                            Пользователи, которые могут создавать айдентику:<br/>
+                            <ul>
+                                <li class="lineli" ng-repeat="user in client.users track by user.id">{{user.name}} <i class="delUser" ng-click="delUserFromClient(user)">[удалить]</i> </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="line">
+                        <label for="catSelect">Добавить категрию:</label>
+                        <select name="catSelect" id="catSelect"
+                                ng-options="form.descr for form in forms track by form.name"
+                                ng-model="formCategory"></select>
+                        <button ng-click="addCat(formCategory)">Добавить категорию</button>
+                    </div>
+                    <i class="clear"></i>
+                    <div class="line">
+                        <div class="usersInClient greyTab">
+                            Категории:<br/>
+                            <ul>
+                                <li class="lineli" ng-repeat="cat in client.data track by $index">
+                                    <div>{{cat.descr}} <i class="delUser" ng-click="removeCat(cat.name)">[удалить]</i></div>
+                                    <ul>
+                                        <li class="smallLi" ng-repeat="type in cat.types track by $index">{{type.name}}
+                                            <i class="delUser" ng-click="removeType(cat, type)">[удалить]</i>
+                                            <i class="delUser" ng-click="fieldsChange(cat, type)">[поля]</i>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="fieldsPopUp" ng-show="showFieldsPopUp">
+                        <i class="closePopUp" ng-click="showFieldsPopUp=false;">X</i>
+                        <h2>Поля для заполнения:</h2>
+                        <div class="greyTab ">
+                            <table width="100%">
+                                <tr>
+                                    <th>название</th>
+                                    <th>тип</th>
+                                    <th>активный</th>
+                                    <th>порядковый номер</th>
+                                    <th>удалить</th>
+                                </tr>
+                                <tr ng-repeat="field in fields" data-id="field.id">
+                                    <td><input type="text" ng-model="field.descr"/></td>
+                                    <td><select name="inpSelect" id="inpSelect" ng-model="field.type"
+                                                ng-options="o for o in fieldTypes"></select></td>
+
+                                    <td><input type="checkbox" ng-model="field.active"></td>
+                                    <td><input type="text" ng-model="field.order"/></td>
+                                    <td ng-click="delField(field)" class="curpoi">[ удалить ]</td>
+                                </tr>
+                            </table>
+                            <button ng-click="addEmptyField()">добавить</button>
+                        </div>
+                        <i class="clear"></i>
+                        <button  class="fr " ng-click="saveFields()">Сохранить поля</button>
+                    </div>
+                    <i class="clear"></i>
+                    <button ng-click="saveClient()" class="fr">Сохранить</button>
+                    <i class="clear"></i>
+                </div>
+                <!---->
+            <%}%>
+            </div>
         </div>
         <div class="catalog" ng-show="tab==3">
             <span class="fr smallWarn" ng-click="restoreBack()">Восстановить данные по умолчанию (все затрет!)</span>
@@ -129,11 +241,10 @@ setTimeout(function sunrise () {
                 <i class="splitline"></i>
                 <div class="line">
                     <h4>Доступные типы:</h4>
-                    <label for="type">В категории:</label>
+                    <label for="type">в категории:</label>
                     <select name="form" id="form"
                             ng-options="form.descr for form in forms track by form.name"
                             ng-model="selectedOption"></select>
-
                     <ul>
                         <li ng-repeat="type in selectedOption.types track by $index">{{type}}  <i ng-click="delete(selectedOption, type)">удалить</i></li>
                     </ul>

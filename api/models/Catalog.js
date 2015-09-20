@@ -8,8 +8,8 @@
 module.exports = {
 
   attributes: {
-      'forms' : 'array',
-      'types' : 'array'
+      'forms' : 'array'//,
+//      'types' : 'array'
   }
 };
 

@@ -9,7 +9,8 @@ var User = {
     passports : { collection: 'Passport', via: 'user' },
     active    : { type: 'boolean',  unique: false },
     type      : { type: 'string', unique: false },
-    client    : { type: 'string', unique: false }
+    client    : { type: 'array', unique: false }
+
   }
 };
 

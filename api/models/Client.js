@@ -10,11 +10,8 @@ module.exports = {
   attributes: {
       'name': 'string',
       'details' : 'string',
-      'types': 'array',
-      'bcards': 'array',
-      'blanks': 'array',
-      'converts': 'array',
-      'users': 'array'
+      'users': 'array',
+      'data': 'array'
   }
 
 };
