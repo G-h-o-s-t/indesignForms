@@ -38,6 +38,8 @@ app.controller('admin', function ($scope) {
     $scope.fields=[];
     $scope.fieldTypes= ['text','textarea'];
     $scope.client = {};
+    $scope.cients = [];
+    $scope.fieldsTitle = '';
 
     function clone(obj) {
         if (Object.prototype.toString.call(obj) === '[object Array]') {
@@ -170,9 +172,9 @@ app.controller('admin', function ($scope) {
 //        console.log($scope.client.data);
     };
 
-    $scope.saveClient = function() {
+    $scope.createClient = function() {
 //        $scope.showAddCliForm = false;
-        console.log('Save Client');
+        console.log('Create new client');
 
         var client = {users:[], data:[]};
         client.name = $scope.cliName;
@@ -180,7 +182,15 @@ app.controller('admin', function ($scope) {
         client.users = $scope.client.users;
         client.data  = $scope.client.data;
 
-        console.log( client );
+        console.log( 'send:', client );
+
+        io.socket.post('/admin/client',client, function (data, jwres){
+            console.log('recieve:', data );
+            $scope.$apply(function(){
+                $scope.clients.push(data);
+            });
+        });
+
     };
     
     $scope.removeType = function( cat, type ) {
@@ -198,8 +208,24 @@ app.controller('admin', function ($scope) {
         var idx2 = $scope.client.data[idx].types.indexOf(type);
         $scope.filedsIdx = [idx,idx2];
 
-        console.log('fieldsChange', $scope.filedsIdx );
-        console.log('client:', $scope.client);
+        $scope.fieldsTitle = $scope.client.data[idx].descr + ' / '+$scope.client.data[idx].types[idx2].name;
+        var fields = $scope.client.data[idx].types[idx2].fields;
+
+        //console.log('найдены:', $scope.client.data[idx].types[idx2].fields);
+        if(fields.length) {          // если есть какие - грузим данные
+
+            io.socket.get('/admin/field/',{'id':fields}, function (data, jwres){
+                console.log('recieve:', data );
+                $scope.$apply(function(){
+                    $scope.fields = data;
+                });
+            });
+
+        } else {
+            $scope.fields=[];
+        }
+        //console.log('fieldsChange', $scope.filedsIdx );
+        //console.log('client:', $scope.client);
     };
 
     $scope.delField = function(field){
@@ -242,6 +268,7 @@ app.controller('admin', function ($scope) {
 
         console.log($scope.fields);
         var ids = [];
+
         for(var i=0,l=$scope.fields.length; i<l; i++){
             var field = $scope.fields[i];
             ids.push(field.id);
@@ -255,10 +282,9 @@ app.controller('admin', function ($scope) {
         console.log('IDS:', ids);
         console.log('IDX', idx);
         console.log('one:', $scope.client.data[ idx[0] ]);
-
         console.log('two:', $scope.client.data[ idx[0] ].types[ idx[1] ] );
-//        console.log('fields:', $scope.client.data[ idx[0] ].types[ idx[1]] );
-        $scope.client.data[ idx[0] ].types[ idx[1]].fields = ids
+
+        $scope.client.data[ idx[0] ].types[ idx[1] ].fields = ids;
 
         console.log('cli dta:', $scope.client.data);
     };

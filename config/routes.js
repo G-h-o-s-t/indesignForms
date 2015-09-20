@@ -40,9 +40,12 @@ module.exports.routes = {
     'get /register': 'AuthController.register',
 
     'post /admin/catalog':'AdminController.saveCatalog',
+    'post /admin/client':'AdminController.createClient',
+
     'post /admin/field':'AdminController.createField',
     'put  /admin/field':'AdminController.modifyField',
-    'delete  /admin/field/:id':'AdminController.deleteField',
+    'delete /admin/field/:id':'AdminController.deleteField',
+    'get  /admin/field':'AdminController.getField',
 
     'post /auth/local': 'AuthController.callback',
     'post /auth/local/:action': 'AuthController.callback',

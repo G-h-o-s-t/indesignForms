@@ -64,6 +64,25 @@ module.exports = {
         }
     },
 
+//  Clients..
+    createClient: function (req, res) {
+        console.log('Creating client');
+        console.log( req.allParams() );
+        Client.create(req.allParams(), function (err, result) {
+            if (err) return res.serverError(err);
+            return res.json(result);
+        });
+    },
+
+// Fields,
+    getField: function (req, res) {
+        Fields.find( req.allParams() , function (err, result) {
+            if (err) return res.serverError(err);
+            return res.json(result);
+        });
+
+    },
+
     createField: function (req, res) {
         Fields.create(req.allParams(), function (err, result) {
             if (err) return res.serverError(err);
