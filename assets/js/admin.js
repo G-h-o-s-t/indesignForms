@@ -33,6 +33,7 @@ app.controller('admin', function ($scope) {
     };
 
     $scope.tab = 1;
+    $scope.cliActive = true;
     $scope.showAddCliForm = false;
     $scope.forms=[];
     $scope.fields=[];
@@ -73,6 +74,7 @@ app.controller('admin', function ($scope) {
         io.socket.get('/admin/clients', function (data, jwres){
             $scope.$apply(function(){
                 $scope.clients = data.clients;
+                console.log( $scope.clients );
             });
         });
         io.socket.get('/admin/catalog', function (data, jwres){
@@ -181,6 +183,7 @@ app.controller('admin', function ($scope) {
         client.details = $scope.cliDescr;
         client.users = $scope.client.users;
         client.data  = $scope.client.data;
+        client.active = $scope.cliActive;
 
         console.log( 'send:', client );
 
@@ -279,14 +282,14 @@ app.controller('admin', function ($scope) {
         }
 //        $scope.changedFieldsFor.fields = ids;
 
-        console.log('IDS:', ids);
-        console.log('IDX', idx);
-        console.log('one:', $scope.client.data[ idx[0] ]);
-        console.log('two:', $scope.client.data[ idx[0] ].types[ idx[1] ] );
+        //console.log('IDS:', ids);
+        //console.log('IDX', idx);
+        //console.log('one:', $scope.client.data[ idx[0] ]);
+        //console.log('two:', $scope.client.data[ idx[0] ].types[ idx[1] ] );
 
         $scope.client.data[ idx[0] ].types[ idx[1] ].fields = ids;
 
-        console.log('cli dta:', $scope.client.data);
+//        console.log('cli dta:', $scope.client.data);
     };
 
 });

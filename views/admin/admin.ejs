@@ -19,7 +19,7 @@
         border: 1px solid #ccc;
         display: block; float: left;
         color: #333;
-        padding: 15px; border-bottom: 0!important;
+        padding: 10px; border-bottom: 0!important;
         background-color: #eee;}
     .tab.active:hover,.tab:hover{ color: #000; background-color: #ccc;  }
     .tab.active{  text-decoration: underline; background-color: #fff;}
@@ -47,6 +47,8 @@
     .curpoi span{ text-decoration: underline; }
     i.closePopUp{    position: absolute;  right: 8px;top: 15px;font-weight: bold;font-style: normal;width: 20px;height: 20px;display: block;cursor: pointer;}
     .usersInClient{ margin-top:16px;}
+    .bordered{border: 1px solid #999;}
+    tr:nth-child(2n) {background: #e2e2e2;}
 </style>
 <script type="text/javascript">
 setTimeout(function sunrise () {
@@ -122,36 +124,41 @@ setTimeout(function sunrise () {
         <div class="clients" ng-show="tab==2">
             <h2>Список клиентов:</h2>
             <div class="clientsList">
-            <%if(clients.length){%>
-                <button>Добавить клиента</button>
-                <table width="100%">
+
+                <table width="100%" class="bordered" cellspacing="0" >
                     <tr>
                         <th>Название клиента</th>
                         <th>Описание клиента</th>
                         <th>Пользователи</th>
                         <th>активный</th>
                     </tr>
-                    <% for(var i=0,l=clients.length; i<l; i++){ var client = clients[i]; %>
-                    <tr>
-                        <td><%= client.username %></td>
-                        <td><%= client.email %></td>
-                        <td><%= client.type %></td>
-                        <td><%= client.active %></td>
+
+                    <tr ng-repeat="client in clients">
+                        <td>{{client.name}}</td>
+                        <td>{{client.details}}</td>
+                        <td>
+                            <span ng-repeat="user in client.users">{{user.name}}</span>&nbsp;
+                        </td>
+                        <td>{{client.active?'активный':'заблокирован'}}</td>
                     </tr>
                     <tr><td colspan="4"></td></tr>
-                    <%}%>
-                </table>
-            <%} else {%>
 
-                <div class="notFound" ng-hide="showAddCliForm">Клиентов нет</div>
+                </table>
+
+
+                <br/>
                 <button ng-click="newClient()" ng-hide="showAddCliForm">Добавить клиента</button>
 
                 <div class="addCliForm" ng-show="showAddCliForm">
                     <div class="line">
-                        <label for="cliName">Название клиента</label>
-                        <input type="text" name="cliName" id="cliName" ng-model="cliName"/>
-                        <label for="cliDescr">Описание</label>
-                        <input type="text" name="cliDescr" id="cliDescr" ng-model="cliDescr"/>
+                        <label for="cliName">Название клиента:</label>
+                        <input type="text" name="cliName" id="cliName" ng-model="cliName"/>&nbsp;
+
+                        <label for="cliDescr">Описание:</label>
+                        <input type="text" name="cliDescr" id="cliDescr" ng-model="cliDescr"/>&nbsp;
+
+                        <label for="cliActive">Активный:</label>
+                        <input type="checkbox" name="active" id="cliActive" ng-model="cliActive"/>
                     </div>
                     <div class="line">
                         <label for="userSelect">Добавить пользователя к клиенту:</label>
@@ -223,8 +230,7 @@ setTimeout(function sunrise () {
                     <button ng-click="createClient()" class="fr">Создать клиента</button>
                     <i class="clear"></i>
                 </div>
-                <!---->
-            <%}%>
+
             </div>
         </div>
         <div class="catalog" ng-show="tab==3">

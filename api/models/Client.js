@@ -11,7 +11,8 @@ module.exports = {
       'name': 'string',
       'details' : 'string',
       'users': 'array',
-      'data': 'array'
+      'data': 'array',
+      'active': 'boolean'
   }
 
 };
