@@ -41,6 +41,7 @@ app.controller('admin', function ($scope) {
     $scope.client = {};
     $scope.cients = [];
     $scope.fieldsTitle = '';
+    $scope.showCreate = true;
 
     function clone(obj) {
         if (Object.prototype.toString.call(obj) === '[object Array]') {
@@ -61,6 +62,14 @@ app.controller('admin', function ($scope) {
     }
 
 
+    function loadClients() {
+        io.socket.get('/admin/clients', function (data, jwres){
+            $scope.$apply(function(){
+                $scope.clients = data.clients;
+                console.log( $scope.clients );
+            });
+        });
+    }
 
 // Load Data..
     io.socket.on('connect', function(){
@@ -71,12 +80,9 @@ app.controller('admin', function ($scope) {
                 $scope.users = data.users;
             });
         });
-        io.socket.get('/admin/clients', function (data, jwres){
-            $scope.$apply(function(){
-                $scope.clients = data.clients;
-                console.log( $scope.clients );
-            });
-        });
+
+        loadClients();
+
         io.socket.get('/admin/catalog', function (data, jwres){
             $scope.$apply(function(){
                 $scope.forms = data.catalog[0].forms;
@@ -134,6 +140,7 @@ app.controller('admin', function ($scope) {
     };
 
     $scope.newClient =function(){
+        $scope.showCreate = true;
         $scope.showAddCliForm = true;
         $scope.client = {users:[], data:[]};
     };
@@ -171,26 +178,32 @@ app.controller('admin', function ($scope) {
                 if($scope.client.data[i] && $scope.client.data[i].name === catName){ $scope.client.data.splice(i,1); }
             }
         }
-//        console.log($scope.client.data);
+    };
+
+
+    $scope.saveClient = function() {
+        console.log('Save client', $scope.client);
+        var cli = JSON.parse( angular.toJson($scope.client, false) );       // anguar add $$index keys in to model. to remove this
+        console.log( 'send:',cli );
+
+        io.socket.put('/admin/client', cli, function (data, jwres){
+            console.log('recieve:', data );
+            $scope.$apply(function(){
+                $scope.showAddCliForm = false;
+            });
+            loadClients();                      // update new data.
+        });
+
     };
 
     $scope.createClient = function() {
-//        $scope.showAddCliForm = false;
-        console.log('Create new client');
 
-        var client = {users:[], data:[]};
-        client.name = $scope.cliName;
-        client.details = $scope.cliDescr;
-        client.users = $scope.client.users;
-        client.data  = $scope.client.data;
-        client.active = $scope.cliActive;
+        var cli = JSON.parse( angular.toJson($scope.client, false) );
 
-        console.log( 'send:', client );
-
-        io.socket.post('/admin/client',client, function (data, jwres){
-            console.log('recieve:', data );
+        io.socket.post('/admin/client', cli , function (data, jwres){
             $scope.$apply(function(){
                 $scope.clients.push(data);
+                $scope.showAddCliForm = false;
             });
         });
 
@@ -227,8 +240,13 @@ app.controller('admin', function ($scope) {
         } else {
             $scope.fields=[];
         }
-        //console.log('fieldsChange', $scope.filedsIdx );
-        //console.log('client:', $scope.client);
+    };
+
+    $scope.editClient = function(cli) {
+        console.log(cli);
+        $scope.client = cli;
+        $scope.showCreate = false;
+        $scope.showAddCliForm = true;
     };
 
     $scope.delField = function(field){

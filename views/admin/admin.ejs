@@ -38,6 +38,7 @@
     .cliLine{ clear: both; }
     .smallLi{ font-size: 15px; font-weight: normal; }
     .lineli{ display: block; border: 1px solid #e2e2e2; padding: 5px 10px; margin: 0 5px 0 0; background: #eee; font-weight: bold; }
+    .lineliu{ display: inline-block; border: 1px solid #e2e2e2; padding: 5px 10px; margin: 0 5px 0 0; background: #eee; font-weight: bold; }
     .fieldsPopUp{ position: fixed; top: 40px; left: 50%; width: 768px; background: #fff; margin-left: -384px; padding: 40px; border-radius: 10px;
         -webkit-box-shadow: 0px 0px 30px 0px rgba(50, 50, 50, 0.75);
         -moz-box-shadow:    0px 0px 30px 0px rgba(50, 50, 50, 0.75);
@@ -50,6 +51,8 @@
     .bordered{border: 1px solid #999;}
     tr:nth-child(2n) {background: #e2e2e2;}
     .addCliForm{ padding: 15px; background: #e3f3f5;}
+    .clientsLine{ cursor: pointer;}
+    .clientsLine:hover{ background: #ccc;}
 </style>
 <script type="text/javascript">
 setTimeout(function sunrise () {
@@ -129,17 +132,15 @@ setTimeout(function sunrise () {
                 <table width="100%" class="bordered" cellspacing="0" >
                     <tr>
                         <th>Название клиента</th>
-                        <th>Описание клиента</th>
+                        <th>Описание</th>
                         <th>Пользователи</th>
                         <th>активный</th>
                     </tr>
 
-                    <tr ng-repeat="client in clients">
+                    <tr ng-repeat="client in clients" class="clientsLine" ng-click="editClient(client)">
                         <td>{{client.name}}</td>
                         <td>{{client.details}}</td>
-                        <td>
-                            <span ng-repeat="user in client.users">{{user.name}}</span>&nbsp;
-                        </td>
+                        <td><span ng-repeat="user in client.users">{{user.name}}</span>&nbsp;</td>
                         <td>{{client.active?'активный':'заблокирован'}}</td>
                     </tr>
                     <tr><td colspan="4"></td></tr>
@@ -153,13 +154,13 @@ setTimeout(function sunrise () {
                 <div class="addCliForm" ng-show="showAddCliForm">
                     <div class="line">
                         <label for="cliName">Название клиента:</label>
-                        <input type="text" name="cliName" id="cliName" ng-model="cliName"/>&nbsp;
+                        <input type="text" name="cliName" id="cliName" ng-model="client.name"/>&nbsp;
 
                         <label for="cliDescr">Описание:</label>
-                        <input type="text" name="cliDescr" id="cliDescr" ng-model="cliDescr"/>&nbsp;
+                        <input type="text" name="cliDescr" id="cliDescr" ng-model="client.details"/>&nbsp;
 
                         <label for="cliActive">Активный:</label>
-                        <input type="checkbox" name="active" id="cliActive" ng-model="cliActive"/>
+                        <input type="checkbox" name="active" id="cliActive" ng-model="client.active"/>
                     </div>
                     <div class="line">
                         <label for="userSelect">Добавить пользователя к клиенту:</label>
@@ -170,7 +171,7 @@ setTimeout(function sunrise () {
                         <div class="usersInClient greyTab">
                             Пользователи, которые могут создавать айдентику:<br/>
                             <ul>
-                                <li class="lineli" ng-repeat="user in client.users track by user.id">{{user.name}} <i class="delUser" ng-click="delUserFromClient(user)">[удалить]</i> </li>
+                                <li class="lineliu" ng-repeat="user in client.users track by user.id">{{user.name}} <i class="delUser" ng-click="delUserFromClient(user)">[удалить]</i> </li>
                             </ul>
                         </div>
                     </div>
@@ -228,7 +229,8 @@ setTimeout(function sunrise () {
                         <button  class="fr " ng-click="saveFields()">Сохранить поля</button>
                     </div>
                     <i class="clear"></i>
-                    <button ng-click="createClient()" class="fr">Создать клиента</button>
+                    <button ng-click="createClient()" class="fr" ng-show="showCreate">Создать клиента</button>
+                    <button ng-click="saveClient()" class="fr" ng-hide="showCreate">Сохранить</button>
                     <i class="clear"></i>
                 </div>
 

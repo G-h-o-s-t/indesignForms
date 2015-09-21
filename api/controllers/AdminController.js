@@ -66,11 +66,27 @@ module.exports = {
 
 //  Clients..
     createClient: function (req, res) {
-        console.log('Creating client');
-        console.log( req.allParams() );
         Client.create(req.allParams(), function (err, result) {
             if (err) return res.serverError(err);
             return res.json(result);
+        });
+    },
+
+    modifyClient: function (req, res) {
+        if(!req.allParams().id) return res.badRequest('No field ID specified.');
+        Client.findOne(req.allParams().id, function (err, cli) {
+            if (err) return res.serverError(err);
+
+            cli.name = req.allParams().name;
+            cli.details = req.allParams().details;
+            cli.users = req.allParams().users;
+            cli.data = req.allParams().data;
+            cli.active = req.allParams().active;
+
+            cli.save(function(err, data){
+                if (err) return res.serverError(err);
+                return res.json(data);
+            });
         });
     },
 

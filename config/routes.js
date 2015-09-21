@@ -41,6 +41,7 @@ module.exports.routes = {
 
     'post /admin/catalog':'AdminController.saveCatalog',
     'post /admin/client':'AdminController.createClient',
+    'put /admin/client':'AdminController.modifyClient',
 
     'post /admin/field':'AdminController.createField',
     'put  /admin/field':'AdminController.modifyField',
