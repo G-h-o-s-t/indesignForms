@@ -113,10 +113,10 @@ passport.connect = function (req, query, profile, next) {
           if (err) {
             if (err.code === 'E_VALIDATION') {
               if (err.invalidAttributes.email) {
-                req.flash('error', 'Error.Passport.Email.Exists');
+                req.flash('error', 'Не правильный email');
               }
               else {
-                req.flash('error', 'Error.Passport.User.Exists');
+                req.flash('error', 'Такой пользователь уже существует');
               }
             }
 
@@ -224,13 +224,15 @@ passport.callback = function (req, res, next) {
   var provider = req.param('provider', 'local')
     , action   = req.param('action');
 
+  console.log('SERVICE:', provider, action, req.user);
+
   // Passport.js wasn't really built for local user registration, but it's nice
   // having it tied into everything else.
   if (provider === 'local' && action !== undefined) {
-    if (action === 'register' && !req.user) {
+    if (action === 'register' ) {                           //&& !req.user       disable unlogged users
       this.protocols.local.register(req, res, next);
     }
-    else if (action === 'connect' && req.user) {
+    else if (action === 'connect') {                        //&& req.user
       this.protocols.local.connect(req, res, next);
     }
     else if (action === 'disconnect' && req.user) {
@@ -247,6 +249,7 @@ passport.callback = function (req, res, next) {
       // the authentication process by attempting to obtain an access token. If
       // access was granted, the user will be logged in. Otherwise, authentication
       // has failed.
+      console.log('call authenticate..', provider);
       this.authenticate(provider, next)(req, res, req.next);
     }
   }

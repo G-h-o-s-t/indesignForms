@@ -32,6 +32,7 @@ app.controller('admin', function ($scope) {
         multicharmap: slug.multicharmap
     };
 
+    $scope.user = {};
     $scope.tab = 1;
     $scope.cliActive = true;
     $scope.showAddCliForm = false;
@@ -66,7 +67,14 @@ app.controller('admin', function ($scope) {
         io.socket.get('/admin/clients', function (data, jwres){
             $scope.$apply(function(){
                 $scope.clients = data.clients;
-                console.log( $scope.clients );
+            });
+        });
+    }
+
+    function loadUsers() {
+        io.socket.get('/admin/users', function (data, jwres){
+            $scope.$apply(function(){
+                $scope.users = data.users;
             });
         });
     }
@@ -75,22 +83,56 @@ app.controller('admin', function ($scope) {
     io.socket.on('connect', function(){
         io.socket.connected = true;
         console.log('Socket Connected..',io.socket.connected );
-        io.socket.get('/admin/users', function (data, jwres){
-            $scope.$apply(function(){
-                $scope.users = data.users;
-            });
-        });
 
+        loadUsers();
         loadClients();
 
         io.socket.get('/admin/catalog', function (data, jwres){
             $scope.$apply(function(){
                 $scope.forms = data.catalog[0].forms;
-                console.log('catalog loaded', data.catalog[0].forms );
             });
         });
     });
 
+    $scope.addUser = function() {
+        console.log('POST:', $scope.user);
+        $scope.user.provider = 'local';
+
+        io.socket.post('/auth/local/register', $scope.user, function (data, jwres){
+
+            if(data.err && data.err[0]){
+                switch (data.err[0]){
+                    case 'Error.Passport.Email.Exists': alert('Не правильный email'); break;
+                    case 'Error.Passport.Username.Missing': alert('Не указано имя пользователя'); break;
+                    case 'Error.Passport.Password.Missing': alert('Не указан пароль'); break;
+                    case 'Error.Passport.Email.Missing': alert('Не указан email'); break;
+                    case 'Error.Passport.Password.Invalid': alert('Длинна пароля должна быть >= 8 символам'); break;
+                    default: alert(data.err);
+                }
+            }
+            console.log('recieve:', data);
+
+            if(data.msg ==='user Added'){
+                $scope.$apply(function(){
+                    $scope.users.push($scope.user);
+                });
+            }
+        });
+    };
+
+    $scope.delUser = function (user) {
+        console.log('DELETE ',user);
+
+        io.socket.delete('/admin/user/'+user.id, function (data, jwres){
+            console.log('recieve:', data);
+
+            $scope.$apply(function(){
+                var idx =  $scope.users.indexOf(user);
+                $scope.users.splice(idx, 1);
+            });
+
+        });
+    };
 
     $scope.restoreBack = function(){
 
@@ -258,9 +300,6 @@ app.controller('admin', function ($scope) {
                 $scope.fields.splice($scope.fields.indexOf(field),1);
             });
         });
-
-
-
     };
 
     $scope.addEmptyField = function(){

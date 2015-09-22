@@ -48,6 +48,18 @@ module.exports = {
         });
     },
 
+    // user delete
+    deleteUser: function (req, res) {
+        if(!req.allParams().id) return res.serverError('No id to delete specified');
+        Passport.destroy({'user': req.allParams().id }).exec(function (err, u) {
+            if (err) return res.serverError(err);
+            User.destroy(req.allParams().id, function (err, result) {
+                if (err) return res.serverError(err);
+                return res.json(result);
+            });
+        });
+    },
+
     // post/catalog
     // WARNING, !recreate all records!!
     saveCatalog: function ( req, res ) {

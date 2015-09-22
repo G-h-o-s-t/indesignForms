@@ -53,6 +53,7 @@
     .addCliForm{ padding: 15px; background: #e3f3f5;}
     .clientsLine{ cursor: pointer;}
     .clientsLine:hover{ background: #ccc;}
+    i.deleteUser{ font-style: normal; cursor: pointer; text-decoration: underline;}
 </style>
 <script type="text/javascript">
 setTimeout(function sunrise () {
@@ -76,30 +77,30 @@ setTimeout(function sunrise () {
         <div class="users" ng-show="tab==1">
             <div class="addTab">
                 <h2>Добавление пользователя:</h2>
-                <form role="form" action="/auth/local/register" method="post">
+                <!--<form role="form" action="/auth/local/register" method="post">-->
                     <div class="line">
-                        <input type="text" name="username" placeholder="Username">
-                        <input type="text" name="email" placeholder="Email">
-                        <input type="password" name="password" placeholder="Password">
+                        <input type="text" name="username" placeholder="Username" ng-model="user.username">
+                        <input type="text" name="email" placeholder="Email" ng-model="user.email">
+                        <input type="password" name="password" placeholder="Password" ng-model="user.password">
                     </div>
                     <div class="line">
                         <label for="type">Тип пользователя</label>
-                        <select name="type" id="type">
+                        <select name="type" id="type" ng-model="user.type">
                             <option value="registred">обычный</option>
                             <option value="admin">админ</option>
                         </select>
                         <label for="active">Статус:</label>
-                        <select name="active" id="active">
+                        <select name="active" id="active" ng-model="user.active">
                             <option value="true">активный</option>
                             <option value="false">выключен</option>
                         </select>
-                        <select name="client" id="client">
-                            <option value="client1">client1</option>
-                        </select>
+                        <!--<select name="client" id="client">-->
+                            <!--<option value="client1">client1</option>-->
+                        <!--</select>-->
                     </div>
                     <br/>
-                    <button type="submit">Добавить</button>
-                </form>
+                    <button ng-click="addUser()">Добавить</button>
+
             </div>
             <div class="viewTab">
                 <h2>Список пользователей</h2>
@@ -109,17 +110,15 @@ setTimeout(function sunrise () {
                         <th>почта</th>
                         <th>тип</th>
                         <th>активный</th>
-                        <th>клиент</th>
+                        <th></th>
                     </tr>
-                    <% for(var i=0,l=users.length; i<l; i++){ var user = users[i]; %>
-                    <tr>
-                        <td><%= user.username %></td>
-                        <td><%= user.email %></td>
-                        <td><%= user.type %></td>
-                        <td><%= user.active %></td>
-                        <td> - </td>
+                    <tr ng-repeat="user in users">
+                        <td>{{user.username}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.type}}</td>
+                        <td>{{user.active}}</td>
+                        <td><i class="deleteUser" ng-click="delUser(user)">[удалить]</i></td>
                     </tr>
-                    <%}%>
 
                 </table>
             </div>
@@ -140,7 +139,7 @@ setTimeout(function sunrise () {
                     <tr ng-repeat="client in clients" class="clientsLine" ng-click="editClient(client)">
                         <td>{{client.name}}</td>
                         <td>{{client.details}}</td>
-                        <td><span ng-repeat="user in client.users">{{user.name}}</span>&nbsp;</td>
+                        <td><span ng-repeat="user in client.users">{{user.name}}&nbsp;</span></td>
                         <td>{{client.active?'активный':'заблокирован'}}</td>
                     </tr>
                     <tr><td colspan="4"></td></tr>

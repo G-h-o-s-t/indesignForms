@@ -102,6 +102,8 @@ exports.connect = function (req, res, next) {
   var user     = req.user
     , password = req.param('password');
 
+console.log('protocol connect...');
+
   Passport.findOne({
     protocol : 'local'
   , user     : user.id
@@ -154,14 +156,17 @@ exports.login = function (req, identifier, password, next) {
     }
 
     if (!user) {
-      if (isEmail) {
-        req.flash('error', 'Error.Passport.Email.NotFound');
-      } else {
-        req.flash('error', 'Error.Passport.Username.NotFound');
-      }
-      if (!user.active) { req.flash('error', 'Error.Username.Disabled'); }
+        req.flash('error', 'Error.Passport.User.NotFound');
+
+        if (isEmail) {
+            req.flash('error', 'Error.Passport.Email.NotFound');
+        } else {
+            req.flash('error', 'Error.Passport.Username.NotFound');
+        }
       return next(null, false);
     }
+
+    if (!user.active) { req.flash('error', 'Error.Username.Disabled'); return next(null, false); }
 
     Passport.findOne({
       protocol : 'local'
