@@ -193,6 +193,7 @@ var AuthController = {
             req.session.authenticated = true;
             req.session.type = user.type;
             req.session.active = user.active;
+            req.session.user =  user;
 
             return res.json({'msg':'logged in.'});
         }

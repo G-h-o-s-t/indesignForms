@@ -31,6 +31,7 @@ module.exports.policies = {
 
 
     '*'     : ['passport', 'sessionAuth'],
+    'interface': { '*': ['passport'] },
     'auth'  : { '*': ['passport'] },
     'admin' : ['isAdmin']
 

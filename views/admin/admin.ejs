@@ -206,6 +206,7 @@ setTimeout(function sunrise () {
                             <table width="100%">
                                 <tr>
                                     <th>название</th>
+                                    <th>indesignName</th>
                                     <th>тип</th>
                                     <th>активный</th>
                                     <th>порядковый номер</th>
@@ -213,6 +214,7 @@ setTimeout(function sunrise () {
                                 </tr>
                                 <tr ng-repeat="field in fields" data-id="field.id">
                                     <td><input type="text" ng-model="field.descr"/></td>
+                                    <td><input type="text" ng-model="field.name"/></td>
                                     <td><select name="inpSelect" id="inpSelect" ng-model="field.type"
                                                 ng-options="o for o in fieldTypes"></select></td>
 

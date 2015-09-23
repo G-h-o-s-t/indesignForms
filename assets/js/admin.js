@@ -304,20 +304,19 @@ app.controller('admin', function ($scope) {
 
     $scope.addEmptyField = function(){
         var newFields = {
-            "name"    : '',  //'Фамилия Имя Отчество',
+            "name"    : '',
             "descr"   : '',  // for label
             "type"    : 'text',    // text, textArea, ?select?
             "active"  : 'true',
             "order"   : $scope.fields.length,
             "data"    : []
         };
-        console.log(newFields);
+//        console.log(newFields);
 
         io.socket.post('/admin/field', newFields, function (data, jwres){
             console.log('recieve', data);
             $scope.$apply(function(){
                 $scope.fields.push(data);
-//                console.log( $scope.fields );
             });
         });
     };
@@ -332,7 +331,8 @@ app.controller('admin', function ($scope) {
         for(var i=0,l=$scope.fields.length; i<l; i++){
             var field = $scope.fields[i];
             ids.push(field.id);
-            $scope.fields[i].name = slug( $scope.fields[i].descr );                     // generate description.
+
+            if(!$scope.fields[i].name){            $scope.fields[i].name = slug( $scope.fields[i].descr );}                     // generate description.
             io.socket.put('/admin/field', $scope.fields[i], function (resData) {
                 console.log('Saved:',resData);
             });

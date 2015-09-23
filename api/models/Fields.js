@@ -8,7 +8,7 @@
 module.exports = {
 
   attributes: {
-      "name"    : 'string',  //'Фамилия Имя Отчество',
+      "name"    : 'string',  //
       "descr"   : 'string',  // for label
       "type"    : 'string',    // textArea, ?select?
       "active"  : 'boolean',
