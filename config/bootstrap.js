@@ -13,6 +13,7 @@ module.exports.bootstrap = function(cb) {
 
     sails.services.passport.loadStrategies();
 
+// use to make passport works via websockets!
     var passport = require('passport'),
         initialize = passport.initialize(),
         session = passport.session(),

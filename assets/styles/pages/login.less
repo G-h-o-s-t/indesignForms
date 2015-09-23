@@ -1,0 +1,40 @@
+@blueColor: #0433ff;
+@greyBg: #f7f7f7;
+@fontSdandard: 14px;
+@tabShade: 0px 3px 10px 0px rgba(50, 50, 50, 0.75);
+.shortInp-block(){
+  width:200px;  line-height:30px;  text-align: center;  display: block; margin: 10px auto;
+  font-size: @fontSdandard;
+};
+@buttonShade: 0px 0px 5px 0px rgba(50, 50, 50, 0.75);
+@buttonShadeHover: 0px 0px 15px 0px rgba(50, 50, 50, 0.75);
+
+.button-block(){
+  border-radius: 5px;
+  border: none;
+  color: white;
+  font-size: @fontSdandard;
+  padding: 5px 40px;
+  font-weight: bold;
+  cursor: pointer;
+  -webkit-box-shadow: @buttonShade;
+  -moz-box-shadow:    @buttonShade;
+  box-shadow: @buttonShade;
+}
+
+//body{ font-family: 'PT Sans', sans-serif; font-size: 14px; }
+//
+.signInBtn{ background: @blueColor; }
+.center{ width: 340px; margin: auto; }
+.cntr{ text-align: center; }
+.logo{ margin: 40px; }
+.loginTab{ margin: 20px; background: @greyBg; padding: 40px 0 20px; border-radius: 3px;
+  -webkit-box-shadow: @tabShade;
+  -moz-box-shadow: @tabShade;
+  box-shadow: @tabShade;
+}
+.face{ margin: 0 0 20px;}
+.loginTab input{ .shortInp-block; }
+button{ .button-block;}
+button:hover{ -webkit-box-shadow: @buttonShadeHover; -moz-box-shadow:@buttonShadeHover;box-shadow:@buttonShadeHover;}
+#err{ color: red;}
