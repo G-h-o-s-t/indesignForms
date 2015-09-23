@@ -6,8 +6,8 @@
             <img src="images/userIco.jpg" alt="" width="96" height="96"/>
         </div>
         <div class="hide" id="err">Eror occur Ж) аорвлыдаролывдаы аровлыда</div>
-        <input type="text" name="identifier" placeholder="Имя или email" id="identifier">
-        <input type="password" name="password" placeholder="Пароль" id="password">
+        <input type="text" name="identifier" placeholder="Имя или email" id="identifier" onkeypress="return runScript(event)">
+        <input type="password" name="password" placeholder="Пароль" id="password" onkeypress="return runScript(event)" >
         <div class="cntr">
             <button class="signInBtn" onclick="login()">Войти</button>
         </div>
@@ -15,6 +15,14 @@
 </div>
 
 <script type="text/javascript">
+function runScript(e) {
+    if (e.keyCode == 13) {
+        login();
+        return false;
+    }
+}
+
+
 function login(){
     console.log('LOGIN!');
     var err = document.getElementById('err'),
@@ -23,7 +31,7 @@ function login(){
         'password' : document.getElementById('password').value,
         'act': 'login'
     };
-//
+
     io.socket.post('/auth/local', params, function (data, jwres){
         console.log('income:', data);
         if(data.err){
@@ -40,7 +48,9 @@ function login(){
                      break;
             }
         }
-        if(data.msg='logged in.'){
+        console.log( data.msg );
+
+        if(!data.err && data.msg==='logged in.'){
             location.href='/userinterface';
         }
     });

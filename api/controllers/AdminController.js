@@ -84,6 +84,15 @@ module.exports = {
         });
     },
 
+    // Client delete
+    deleteClient: function (req, res) {
+        if(!req.allParams().id) return res.serverError('No id specified');
+        Client.destroy( req.allParams().id ).exec(function (err, cli) {
+            if (err) return res.serverError(err);
+            return res.json(cli);
+        });
+    },
+
     modifyClient: function (req, res) {
         if(!req.allParams().id) return res.badRequest('No field ID specified.');
         Client.findOne(req.allParams().id, function (err, cli) {

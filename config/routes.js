@@ -41,6 +41,7 @@ module.exports.routes = {
 
     'post /admin/catalog':'AdminController.saveCatalog',
     'post /admin/client':'AdminController.createClient',
+    'delete /admin/client/:id':'AdminController.deleteClient',
     'put /admin/client':'AdminController.modifyClient',
     'delete /admin/user/:id':'AdminController.deleteUser',
 
@@ -56,7 +57,8 @@ module.exports.routes = {
     'get /auth/:provider/callback': 'AuthController.callback',
     'get /auth/:provider/:action': 'AuthController.callback',
 
-    'get /userinterface': 'interface.index'
+    'get /userinterface': 'interface.index',
+    'get /client/:id': 'interface.client'
 
 
   /***************************************************************************

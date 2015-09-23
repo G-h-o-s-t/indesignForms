@@ -33,7 +33,7 @@
     ul li{ list-style-type: decimal; margin-left: 20px;}
     li i{ font-size: 10px; text-decoration: underline; cursor: pointer; font-style: normal;font-weight: normal; }
     i.splitline{ border-bottom: 1px solid #ccc; height: 0; display: block; margin: 10px;}
-    button{ line-height: 19px; font-size: 14px; cursor: pointer; }
+    .wrapper button{ line-height: 19px; font-size: 14px; cursor: pointer; background: #118798; padding: 5px 20px; }
     .smallWarn{ text-decoration: underline; cursor: pointer; color: red; font-size: 10px;}
     .cliLine{ clear: both; }
     .smallLi{ font-size: 15px; font-weight: normal; }
@@ -54,6 +54,7 @@
     .clientsLine{ cursor: pointer;}
     .clientsLine:hover{ background: #ccc;}
     i.deleteUser{ font-style: normal; cursor: pointer; text-decoration: underline;}
+    .smallField{ width: 50px;}
 </style>
 <script type="text/javascript">
 setTimeout(function sunrise () {
@@ -209,7 +210,7 @@ setTimeout(function sunrise () {
                                     <th>indesignName</th>
                                     <th>тип</th>
                                     <th>активный</th>
-                                    <th>порядковый номер</th>
+                                    <th>номер</th>
                                     <th>&nbsp;</th>
                                 </tr>
                                 <tr ng-repeat="field in fields" data-id="field.id">
@@ -219,7 +220,7 @@ setTimeout(function sunrise () {
                                                 ng-options="o for o in fieldTypes"></select></td>
 
                                     <td><input type="checkbox" ng-model="field.active"></td>
-                                    <td><input type="text" ng-model="field.order"/></td>
+                                    <td><input class="smallField" type="text" ng-model="field.order"/></td>
                                     <td ng-click="delField(field)" class="curpoi">[ <span>удалить</span> ]</td>
                                 </tr>
                             </table>
@@ -231,6 +232,8 @@ setTimeout(function sunrise () {
                     </div>
                     <i class="clear"></i>
                     <button ng-click="createClient()" class="fr" ng-show="showCreate">Создать клиента</button>
+
+                    <button ng-click="delClient()" class="fl" ng-hide="showCreate">Удалить</button>
                     <button ng-click="saveClient()" class="fr" ng-hide="showCreate">Сохранить</button>
                     <i class="clear"></i>
                 </div>

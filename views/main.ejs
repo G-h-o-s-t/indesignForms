@@ -1,24 +1,92 @@
-<header>
-    <img src="images/iidentic" alt="headLogo"/>
-    <div class="userInfo fr">
-        <div>Иванов василий петрович</div>
-        <div>ООО "АДАМАС ЮВЕЛИР"</div>
+<style type="text/css">
+    header{ height: 60px; background: #f1f1f1; color: #808080; text-align: center;}
+    .icenter{ width: 1000px; margin: auto;}
+    .iLogo{ margin: 12px 0 0 0;}
+    .headblock{ height: 60px; border-bottom: 1px solid #ccc; line-height: 60px; }
+    .headblock h4{ font-size: 20px; font-weight: normal; margin: 0; padding: 0}
+    .intWrap{ font-size: 20px; }
+    .mainNavVert{ margin: 40px 0; list-style-type: decimal;}
+    .mainNavVert li{ margin: 20px 0}
+    .userInfo{ font-size: 16px; padding-top: 3px; line-height: 25px;}
+    .logoutLink{ margin-top: 25px; font-size: 12px; color: #000; }
+    .canClick{ cursor: pointer; }
+    .canClick:hover{ text-decoration: underline; }
+    .popUp{    position: absolute;  background-color: #fff;width: 500px;margin: auto;left: 50%;margin-left: -250px;padding: 20px;top: 100px; border-radius: 10px;}
+    .head{ text-align: center;}
+    .fileList{ list-style-type: none; text-align: center; padding: 0 }
+    .fileList li{ font-size: 16px; line-height: 21px; margin: 5px 0;}
+    i.splitline{ margin: 20px 0; display: block; height: 0; border-bottom: 1px solid #cccccc;}
+    i.closePopUp{ cursor: pointer; position: absolute;     right: 10px;  top: 4px; font-size: 20px; font-style: normal;}
+    h3{ font-weight: normal; margin: 20px 0 30px; }
+    .shade{ background: #000; opacity: 0.8; position: fixed; top:0; left: 0; width: 100%; height: 100%; }
+    .wrapper{ position: absolute; width: 100%; height: 100%; top:0; left: 0;}
+    .creationDayTime{ font-size:14px; color:#272727; }
+
+</style>
+<div class="intWrap" ng-app="iidentic" ng-controller="interface">
+    <header>
+        <div class="icenter">
+            <img src="images/headLogo.png" alt="headLogo" width="141" class="iLogo"/>
+            <div class="userInfo fr" ng-init="initCli('<%=client._id%>')">
+                <div><%= user.username %></div>
+                <div><%= client.name %>&nbsp;<%= client.details %></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="icenter">
+        <a href="/logout" class="logoutLink fr">выход</a>
+        <nav class="mainNavHoriz">
+            <nav class="mainNav hide">
+                <li><a href="#">Визитная карточка</a></li>
+                <li><a href="#">Бланк</a></li>
+                <li><a href="#">Конверт</a></li>
+                <li><a href="#">Папка</a></li>
+                <li><a href="#">Элементы фирменного стиля</a></li>
+            </nav>
+        </nav>
     </div>
-</header>
-<nav class="mainNavHoriz">
-    <nav class="mainNav hide">
-        <li><a href="#">Визитная карточка</a></li>
-        <li><a href="#">Бланк</a></li>
-        <li><a href="#">Конверт</a></li>
-        <li><a href="#">Папка</a></li>
-        <li><a href="#">Элементы фирменного стиля</a></li>
-    </nav>
-</nav>
-<h1>Выбирете элемент фирменного стиля для работы:</h1>
-<nav class="mainNavVert">
-    <li><a href="#">Визитная карточка</a></li>
-    <li><a href="#">Бланк</a></li>
-    <li><a href="#">Конверт</a></li>
-    <li><a href="#">Папка</a></li>
-    <li><a href="#">Элементы фирменного стиля</a></li>
-</nav>
+    <div class="headblock">
+        <div class="icenter">
+          <h4>Выбирете элемент фирменного стиля для работы:</h4>
+        </div>
+    </div>
+    <div class="icenter">
+        <nav class="mainNavVert">
+            <li ng-repeat="category in client.data">
+                <span class="canClick" ng-click="showCat(category)">{{category.descr}}</span>
+                <ul ng-show="category.expanded">
+                    <li ng-repeat="type in category.types" class="canClick" ng-click="editData(client.id, type.name, type.id)">{{type.name}}</li>
+                </ul>
+            </li>
+        </nav>
+    </div>
+
+    <div class="wrapper" ng-show="showPopUp">
+        <div class="shade" ng-click="showPopUp=!showPopUp"></div>
+        <div class="popUp">
+            <div class="cntr">
+                <h3>{{typeName}}</h3>
+                <button class="generic" ng-click="moveToCreate()">Создать</button>
+            </div>
+            <i class="splitline"></i>
+            <div class="head">Можно скачать ранее созданные:</div>
+            <i class="closePopUp" ng-click="showPopUp=!showPopUp">x</i>
+            <ul class="fileList">
+                <li><span class="creationDayTime">01.05.2015 18:05</span> <a href="cards1.pdf" target="_blank"> cards1.pdf </a></li>
+                <li><span class="creationDayTime">01.05.2015 18:05</span> <a href="cards2.pdf" target="_blank"> cards2.pdf </a></li>
+                <li><span class="creationDayTime">01.05.2015 18:05</span> <a href="cards3.pdf" target="_blank"> cards3.pdf </a></li>
+                <li><span class="creationDayTime">01.05.2015 18:05</span> <a href="cards4.pdf" target="_blank"> cards4.pdf </a></li>
+                <li><span class="creationDayTime">01.05.2015 18:05</span> <a href="cards5.pdf" target="_blank"> cards5.pdf </a></li>
+                <li><span class="creationDayTime">01.05.2015 18:05</span> <a href="cards6.pdf" target="_blank"> cards6.pdf </a></li>
+                <li><span class="creationDayTime">01.05.2015 18:05</span> <a href="cards7.pdf" target="_blank"> cards7.pdf </a></li>
+                <li><span class="creationDayTime">01.05.2015 18:05</span> <a href="cards8.pdf" target="_blank"> cards8.pdf </a></li>
+                <li><span class="creationDayTime">01.05.2015 18:05</span> <a href="cards9.pdf" target="_blank"> cards9.pdf </a></li>
+                <li><span class="creationDayTime">01.05.2015 18:05</span> <a href="cards10.pdf" target="_blank">cards10.pdf</a></li>
+                <li><span class="creationDayTime">01.05.2015 18:05</span> <a href="cards11.pdf" target="_blank">cards11.pdf</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/js/interface.js"></script>

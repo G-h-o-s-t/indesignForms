@@ -202,7 +202,7 @@ app.controller('admin', function ($scope) {
         var types = [];
 
         for(var i=0,l=cat.types.length; i<l; i++){
-            types.push({'name': cat.types[i], 'fields': [] });
+            types.push({'id':i, 'name': cat.types[i], 'fields': [] });
         }
 
         $scope.client.data.push(                                // create new data for client.
@@ -224,9 +224,26 @@ app.controller('admin', function ($scope) {
 
 
     $scope.saveClient = function() {
+
+        function indexTypes(data) {
+            var idx = 0;
+                for(var i=0,l=data.length; i<l; i++){           // iterate over categories
+                    var cat = data[i];
+
+                    for(var n=0,tl = cat.types.length; n < tl; n++){      // iterate over types=
+                        cat.types[n].id = idx;
+                        ++idx;
+                    }
+                }
+            return data;
+        }
+
+        $scope.client.data = indexTypes($scope.client.data);
+
         console.log('Save client', $scope.client);
         var cli = JSON.parse( angular.toJson($scope.client, false) );       // anguar add $$index keys in to model. to remove this
         console.log( 'send:',cli );
+
 
         io.socket.put('/admin/client', cli, function (data, jwres){
             console.log('recieve:', data );
@@ -234,6 +251,20 @@ app.controller('admin', function ($scope) {
                 $scope.showAddCliForm = false;
             });
             loadClients();                      // update new data.
+        });
+
+    };
+
+    $scope.delClient = function() {
+        var cli = JSON.parse( angular.toJson($scope.client, false) );
+        console.log('DELETE:', cli);
+
+        io.socket.delete('/admin/client/'+cli.id, cli , function (data, jwres){
+            $scope.$apply(function(){
+                var idx = $scope.clients.indexOf($scope.client);
+                $scope.clients.splice(idx,1);
+                $scope.showAddCliForm = false;
+            });
         });
 
     };

@@ -35,7 +35,7 @@ var AuthController = {
         var strategies = sails.config.passport
           , providers  = {};
 
-      console.log('SESSION:', req.session );
+//      console.log('SESSION:', req.session );
 
         // Get a list of available providers for use in your templates.
         Object.keys(strategies).forEach(function (key) {
@@ -133,12 +133,7 @@ var AuthController = {
    */
   callback: function (req, res) {
 
-    console.log('CALLBACK:', req.allParams() );
-    console.log('Callback:', req.user, req.login);
-
-
     function tryAgain (err) {
-      console.log('errors detected.. try again', err);
 
                                                                               // Only certain error messages are returned via req.flash('error', someError)
                                                                               // because we shouldn't expose internal authorization errors to the user.
@@ -176,14 +171,7 @@ var AuthController = {
 
 
     passport.callback(req, res, function (err, user, challenges, statuses) {
-        console.log('after Callback:', err, user);
-
         if (err || !user) return tryAgain(challenges);
-
-        console.log('USER, autnficated!', req.allParams().act);
-
-        console.log( 'PARAMS:', req.allParams() );
-
         if(req.allParams().action == 'register') {
             return res.json({'msg':'user Added'});
         }
@@ -195,7 +183,8 @@ var AuthController = {
             req.session.active = user.active;
             req.session.user =  user;
 
-            return res.json({'msg':'logged in.'});
+            res.json({'msg':'logged in.'});
+            return;
         }
 
         //req.login(user, function (err) {
