@@ -21,7 +21,7 @@ app.directive('myEnter', function () {
     };
 });
 
-app.controller('admin', function ($scope) {
+app.controller('admin',['$scope', function ($scope) {
 
     slug.defaults.modes['pretty'] = {
         replacement: '-',
@@ -291,8 +291,14 @@ app.controller('admin', function ($scope) {
 
     $scope.fieldsChange = function(cat, type){
 
-        console.log('cat, type:', cat, type);
+console.log('CHANGE!!!!');
         $scope.showFieldsPopUp = true;
+
+        setTimeout(function() {
+            var popUp = document.getElementById('fieldsPopUp');
+            window.scrollTo(0, popUp.offsetTop-100);
+        }, 0);
+
         var idx = $scope.client.data.indexOf(cat);
         var idx2 = $scope.client.data[idx].types.indexOf(type);
         $scope.filedsIdx = [idx,idx2];
@@ -380,4 +386,4 @@ app.controller('admin', function ($scope) {
 //        console.log('cli dta:', $scope.client.data);
     };
 
-});
+}]);

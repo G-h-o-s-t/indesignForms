@@ -56,7 +56,7 @@
             <li ng-repeat="category in client.data">
                 <span class="canClick" ng-click="showCat(category)">{{category.descr}}</span>
                 <ul ng-show="category.expanded">
-                    <li ng-repeat="type in category.types" class="canClick" ng-click="editData(client.id, type.name, type.id)">{{type.name}}</li>
+                    <li ng-repeat="type in category.types" class="canClick" ng-click="editData(client.id, type)">{{type.name}}</li>
                 </ul>
             </li>
         </nav>
@@ -67,7 +67,7 @@
         <div class="popUp">
             <div class="cntr">
                 <h3>{{typeName}}</h3>
-                <button class="generic" ng-click="moveToCreate()">Создать</button>
+                <button ng-show="showCreate" class="generic" ng-click="moveToCreate()">Создать новый</button>
             </div>
             <i class="splitline"></i>
             <div class="head">Можно скачать ранее созданные:</div>

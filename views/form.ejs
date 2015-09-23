@@ -1,0 +1,102 @@
+<style type="text/css">
+    header{ height: 60px; background: #f1f1f1; color: #808080; text-align: center;}
+    .icenter{ width: 1000px; margin: auto;}
+    .iLogo{ margin: 12px 0 0 0;}
+    .headblock{ height: 60px; border-bottom: 1px solid #ccc; line-height: 60px; }
+    .headblock h4{ font-size: 20px; font-weight: normal; margin: 0; padding: 0}
+    .intWrap{ font-size: 20px; }
+    .mainNavVert{ margin: 40px 0; list-style-type: decimal;}
+    .mainNavVert li{ margin: 20px 0}
+    .userInfo{ font-size: 16px; padding-top: 3px; line-height: 25px;}
+    .logoutLink{ margin-top: 25px; font-size: 12px; color: #000; }
+    .canClick{ cursor: pointer; }
+    .canClick:hover{ text-decoration: underline; }
+    .popUp{    position: absolute;  background-color: #fff;width: 500px;margin: auto;left: 50%;margin-left: -250px;padding: 20px;top: 100px; border-radius: 10px;}
+    .head{ text-align: center;}
+    .fileList{ list-style-type: none; text-align: center; padding: 0 }
+    .fileList li{ font-size: 16px; line-height: 21px; margin: 5px 0;}
+    h3{ font-weight: normal; margin: 20px 0 30px; }
+    .fieldName{ font-size: 14px; margin: 10px 0; }
+    textarea{width: 540px;padding: 6px 12px;
+        min-height: 400px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+        -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    }
+    input{ padding: 6px 12px; width: 540px;
+        font-size: 14px;
+        line-height: 1.428571429;
+        color: #555;
+        vertical-align: middle;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+        -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; }
+    textarea:focus, input:focus {
+        border-color: #66afe9;
+        outline: 0;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+    }
+</style>
+
+<div class="intWrap" ng-app="iidentic" ng-controller="interface">
+    <header>
+        <div class="icenter">
+            <img src="/images/headLogo.png" alt="headLogo" width="141" class="iLogo"/>
+            <div class="userInfo fr" ng-init="initCli('<%=client._id%>')">
+                <div><%= user.username %></div>
+                <div><%= client.name %>&nbsp;<%= client.details %></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="icenter">
+        <a href="/logout" class="logoutLink fr">выход</a>
+    </div>
+    <div class="headblock">
+        <div class="icenter">
+          <h4><%= type.name %></h4>
+        </div>
+    </div>
+    <div class="icenter">
+        <h4>Заполните поля:</h4>
+        <div class="fieldsPlace">
+
+            <!--<autocomplete ng-model="fields.Full_name.selected" data="arr" ></autocomplete>-->
+
+            <% for(var i=0,l=fields.length; i<l; i++){
+                var field = fields[i]; %>
+            <div class="fieldName"><%= field.descr %></div>
+            <div class="inpt">
+                <%if(field.type == 'text'){%>
+                    <input type="<%= field.type %>" name="<%=field.name%>"/>
+
+                <%} else if(field.type == 'textarea'){%>
+                    <textarea name="<%=field.name%>" ng-model="fields.<%=field.name%>" cols="30" rows="10"></textarea>
+                <%}%>
+            </div>
+            <%}%>
+        </div>
+        <button class="generic fr" ng-click="collect()">Создать</button>
+        <i class="clear"></i>
+        <br/><br/><br/><br/><br/>
+
+
+    </div>
+
+</div>
+<script type="text/javascript">
+    var fields = <%-JSON.stringify(fields) %>;
+    console.log(fields);
+</script>
+<script type="text/javascript" src="/js/autocomplete.js"></script>
+<script type="text/javascript" src="/js/interface.js"></script>

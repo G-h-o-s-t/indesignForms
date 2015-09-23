@@ -37,9 +37,9 @@
     .smallWarn{ text-decoration: underline; cursor: pointer; color: red; font-size: 10px;}
     .cliLine{ clear: both; }
     .smallLi{ font-size: 15px; font-weight: normal; }
-    .lineli{ display: block; border: 1px solid #e2e2e2; padding: 5px 10px; margin: 0 5px 0 0; background: #eee; font-weight: bold; }
-    .lineliu{ display: inline-block; border: 1px solid #e2e2e2; padding: 5px 10px; margin: 0 5px 0 0; background: #eee; font-weight: bold; }
-    .fieldsPopUp{ position: fixed; top: 40px; left: 50%; width: 768px; background: #fff; margin-left: -384px; padding: 40px; border-radius: 10px;
+    .lineli{ display: block; border: 1px solid #e2e2e2; padding: 5px 10px; margin: 0 5px 0 0; background: #fff; font-weight: bold; }
+    .lineliu{ display: inline-block; border: 1px solid #e2e2e2; padding: 5px 10px; margin: 0 5px 0 0; background: #fff; font-weight: bold; }
+    .fieldsPopUp{ position: absolute; top: 600px; left: 50%; width: 768px; background: #fff; margin-left: -384px; padding: 40px; border-radius: 10px;
         -webkit-box-shadow: 0px 0px 30px 0px rgba(50, 50, 50, 0.75);
         -moz-box-shadow:    0px 0px 30px 0px rgba(50, 50, 50, 0.75);
         box-shadow:         0px 0px 30px 0px rgba(50, 50, 50, 0.75);
@@ -199,7 +199,7 @@ setTimeout(function sunrise () {
                             </ul>
                         </div>
                     </div>
-                    <div class="fieldsPopUp" ng-show="showFieldsPopUp">
+                    <div class="fieldsPopUp" id="fieldsPopUp" ng-show="showFieldsPopUp">
                         <i class="closePopUp" ng-click="showFieldsPopUp=false;">X</i>
                         <h2>Поля для заполнения:</h2>
                         <p>{{fieldsTitle}}</p>
