@@ -5,7 +5,7 @@
  * Created by ghost on 23/04/15.
  */
 
-var app = angular.module('iidentic', ['autocomplete']);
+var app = angular.module('iidentic', ['autocomplete','angularMoment']);
 
 /*app.directive('myEnter', function () {
     return function (scope, element, attrs) {
@@ -21,8 +21,7 @@ var app = angular.module('iidentic', ['autocomplete']);
     };
 });*/
 
-app.controller('interface',['$scope','$location', function ($scope, $location) {
-
+app.controller('interface',['$scope', function ($scope) {
     $scope.showPopUp = false;
     $scope.typeName ='';
     $scope.cd = {};
@@ -33,6 +32,7 @@ app.controller('interface',['$scope','$location', function ($scope, $location) {
     $scope.requestId = null;
     $scope.counter = 0;
     $scope.poolTime = 60;  // wait for 1 minute for complite conversion.
+
 
 
 //    console.log('Scope',$scope.fields );
@@ -167,7 +167,7 @@ app.controller('interface',['$scope','$location', function ($scope, $location) {
             }, 1000);
     }
     
-    $scope.editData = function (cliId, type) {
+    $scope.editData = function (cliId, type, catName) {
 
         console.log('type', type);
 
@@ -177,12 +177,18 @@ app.controller('interface',['$scope','$location', function ($scope, $location) {
             $scope.showCreate= false;
         }
 
-        $scope.cd.id = cliId;
-        $scope.cd.name = type.name;
-        $scope.cd.typeId = type.id;
-        $scope.typeName = type.name;
-        $scope.showPopUp = true;
 
+        io.socket.get('/form/requestdocs/', {'clientId':cliId, 'catName':catName, 'typeId': type.id}, function (data, jwres) {
+            console.log('recieved', data);
+            $scope.$apply(function() {
+                $scope.docs = data;
+                $scope.cd.id = cliId;
+                $scope.cd.name = type.name;
+                $scope.cd.typeId = type.id;
+                $scope.typeName = type.name;
+                $scope.showPopUp = true;
+            });
+        });
     };
 
     $scope.moveToCreate = function () {

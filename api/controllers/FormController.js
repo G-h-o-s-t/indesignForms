@@ -16,9 +16,6 @@ module.exports = {
     },
 
     create: function (req, res) {
-        //console.log( req.session );
-        //console.log( req.allParams() );
-
         if(!req.session || !req.session.user.id) { return res.redirect('/'); }
         if(!req.allParams().clientId ){ return res.badRequest('No id Specified');}
 
@@ -112,6 +109,25 @@ module.exports = {
         Request.findOne(req.allParams().id, function (err, record) {
             if (err) return res.serverError(err);
             res.json(record);
+        });
+    },
+
+    requestdocs: function (req, res) {
+        if (!req.allParams().clientId ) return res.badRequest('Invalid params.');
+
+        var cid = req.allParams().clientId,
+            catName = req.allParams().catName,
+            typeId = req.allParams().typeId;
+
+        var query = {
+                "client.id" : cid,
+                "client.dataName": catName||'',
+                "client.dataId" :typeId.toString()||''
+        };
+
+        Request.find(query, function (err, records) {
+            if (err) return res.serverError(err);
+            res.json(records);
         });
     }
 

@@ -54,7 +54,7 @@
             <li ng-repeat="category in client.data">
                 <span class="canClick" ng-click="showCat(category)">{{category.descr}}</span>
                 <ul ng-show="category.expanded">
-                    <li ng-repeat="type in category.types" class="canClick" ng-click="editData(client.id, type)">{{type.name}}</li>
+                    <li ng-repeat="type in category.types" class="canClick" ng-click="editData(client.id, type, category.name)">{{type.name}}</li>
                 </ul>
             </li>
         </nav>
@@ -71,20 +71,9 @@
             <div class="head">Можно скачать ранее созданные:</div>
             <i class="closePopUp" ng-click="showPopUp=!showPopUp">x</i>
             <ul class="fileList">
-                <li><span class="creationDayTime">01.05.2015 18:05</span> <a href="cards1.pdf" target="_blank"> cards1.pdf </a></li>
-                <li><span class="creationDayTime">01.05.2015 18:05</span> <a href="cards2.pdf" target="_blank"> cards2.pdf </a></li>
-                <li><span class="creationDayTime">01.05.2015 18:05</span> <a href="cards3.pdf" target="_blank"> cards3.pdf </a></li>
-                <li><span class="creationDayTime">01.05.2015 18:05</span> <a href="cards4.pdf" target="_blank"> cards4.pdf </a></li>
-                <li><span class="creationDayTime">01.05.2015 18:05</span> <a href="cards5.pdf" target="_blank"> cards5.pdf </a></li>
-                <li><span class="creationDayTime">01.05.2015 18:05</span> <a href="cards6.pdf" target="_blank"> cards6.pdf </a></li>
-                <li><span class="creationDayTime">01.05.2015 18:05</span> <a href="cards7.pdf" target="_blank"> cards7.pdf </a></li>
-                <li><span class="creationDayTime">01.05.2015 18:05</span> <a href="cards8.pdf" target="_blank"> cards8.pdf </a></li>
-                <li><span class="creationDayTime">01.05.2015 18:05</span> <a href="cards9.pdf" target="_blank"> cards9.pdf </a></li>
-                <li><span class="creationDayTime">01.05.2015 18:05</span> <a href="cards10.pdf" target="_blank">cards10.pdf</a></li>
-                <li><span class="creationDayTime">01.05.2015 18:05</span> <a href="cards11.pdf" target="_blank">cards11.pdf</a></li>
+                <li ng-repeat="doc in docs"><span class="creationDayTime">{{doc.updatedAt | amUtc | amLocal | amDateFormat:'MM.DD.YYYY HH:mm'}}</span> <a href="{{doc.outputPath}}" target="_blank"> {{doc.outputPath}} </a></li>
             </ul>
         </div>
     </div>
 </div>
-
 <script type="text/javascript" src="/js/interface.js"></script>
