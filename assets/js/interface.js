@@ -28,9 +28,7 @@ app.controller('interface',['$scope', function ($scope) {
     $scope.cd = {};
     $scope.showCreate = true;
     $scope.fields = window.fields;
-
-    //$scope.arr =[ 'aaa','bbbb','ccccc','abgbgb','aasded' ];
-//    $scope.fields.Full_name.data =[ 'aaa','bbbb','ccccc','abgbgb','aasded' ];
+    $scope.ans = {};
 
 
     console.log('Scope',$scope.fields );
@@ -62,7 +60,31 @@ app.controller('interface',['$scope', function ($scope) {
     $scope.showCat = function(cat) {
         cat.expanded = !cat.expanded;
     };
+    
+    $scope.collect = function() {
+        console.log('SAVE');
+        for(var i=0,l=$scope.fields.length; i<l; i++){
+            var field = $scope.fields[i];
+            if(field.selected) field.data.push(field.selected);
+            $scope.ans[field.name] = field.selected;
+            delete field.updatedAt;
+            delete field.createdAt;
+            delete field.selected;
+        }
+        var fields = JSON.parse( angular.toJson($scope.fields, false) );       // anguar add $$index keys in to model. to remove this
+        console.log( fields );
 
+        io.socket.put('/form/updateFields', fields,  function (data, jwres){
+            console.log('saved', data);
+            //$scope.$apply(function(){
+            //    if(data){
+            //        $scope.client = data.client;
+            //    }
+            //});
+        });
+    };
+
+    
     $scope.editData = function (cliId, type) {
 
         console.log('type', type);

@@ -16,7 +16,7 @@
     .fileList{ list-style-type: none; text-align: center; padding: 0 }
     .fileList li{ font-size: 16px; line-height: 21px; margin: 5px 0;}
     h3{ font-weight: normal; margin: 20px 0 30px; }
-    .fieldName{ font-size: 14px; margin: 10px 0; }
+    .fieldName{ font-size: 14px; margin: 20px 0 10px; }
     textarea{width: 540px;padding: 6px 12px;
         min-height: 400px;
         background-color: #fff;
@@ -71,32 +71,22 @@
         <h4>Заполните поля:</h4>
         <div class="fieldsPlace">
 
-            <!--<autocomplete ng-model="fields.Full_name.selected" data="arr" ></autocomplete>-->
-
-            <% for(var i=0,l=fields.length; i<l; i++){
-                var field = fields[i]; %>
-            <div class="fieldName"><%= field.descr %></div>
-            <div class="inpt">
-                <%if(field.type == 'text'){%>
-                    <input type="<%= field.type %>" name="<%=field.name%>"/>
-
-                <%} else if(field.type == 'textarea'){%>
-                    <textarea name="<%=field.name%>" ng-model="fields.<%=field.name%>" cols="30" rows="10"></textarea>
-                <%}%>
+            <div class="inpLine" ng-repeat="field in fields">
+                <div class="fieldName">{{ field.descr }}</div>
+                <div class="inpt">
+                    <autocomplete ng-model="field.selected" data="field.data" ng-show="field.type=='text'"></autocomplete>
+                    <textarea ng-model="field.selected" cols="30" rows="10" ng-show="field.type=='textarea'"></textarea>
+                </div>
             </div>
-            <%}%>
         </div>
         <button class="generic fr" ng-click="collect()">Создать</button>
         <i class="clear"></i>
         <br/><br/><br/><br/><br/>
-
-
     </div>
 
 </div>
 <script type="text/javascript">
-    var fields = <%-JSON.stringify(fields) %>;
-    console.log(fields);
+var fields = <%-JSON.stringify(fields) %>;
 </script>
 <script type="text/javascript" src="/js/autocomplete.js"></script>
 <script type="text/javascript" src="/js/interface.js"></script>

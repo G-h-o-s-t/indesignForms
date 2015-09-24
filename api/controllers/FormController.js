@@ -32,8 +32,7 @@ module.exports = {
             var data = cli.data,
                 type;
 
-            locals.client = cli,
-            local.ids = [];
+            locals.client = cli;
 
             for(var i=0,l=data.length; i<l; i++){
                 var cat = data[i];
@@ -50,33 +49,11 @@ module.exports = {
 
                 res.view('form', locals);
             });
-
-
-
         });
-
-            //Client.native(function(err, cli) {
-            //    if (err) return res.serverError(err);
-            //    cli.find({'users': { $elemMatch : {'id': id }}} ).toArray(function(err, clients) {
-            //        if(err) return next(err);
-            //        locals.client = clients[0];
-            //        if(!clients[0]){ console.log('no client assigned');
-            //            return res.send(200,'No clients assigned to user');
-            //        }
-            //
-            //        res.view('main', locals);
-            //    });
-            //});
-
-
-
-
-//        res.send(200, req.allParams() );
-        //User.findOne(req.session.passport.user).exec(function (err, user) {
-        //    if(err) res.serverError(err);
-        //    console.log(user.username);
-        //    res.view('test', {user: user.username, email: user.email});
-        //});
+    },
+    updateFields: function (req, res) {
+        console.log( req.allParams() );
+        res.send(200,'Ok');
     }
 
 };
