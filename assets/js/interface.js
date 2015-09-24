@@ -132,7 +132,7 @@ app.controller('interface',['$scope', function ($scope) {
 
 
         $scope.counter = 0;
-        console.log('ID:', id);
+//        console.log('ID:', id);
         $scope.requestId = id;
 
         $scope.job.status = 'prepare';

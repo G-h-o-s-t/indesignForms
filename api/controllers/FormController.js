@@ -77,10 +77,16 @@ module.exports = {
             for(var i=0,l=flds.length; i<l; i++){
                 var fld = flds[i];
                 fld.data = map[fld.id].data;
+                var lastEl = map[fld.id].data.pop();
 
-                if(fld.data.indexOf( map[fld.id].data.pop() ) == -1) fld.save();            // save only Uniq
+                if(fld.data.indexOf( lastEl ) == -1) {                      //  данных в базе нет.
+                    fld.data.push(lastEl);
+                    fld.save();
+                }            // save only Uniq
             }
             res.send(200, 'fields Accepted');
+
+            lastEl = null; fld= null;
         });
     },
 
