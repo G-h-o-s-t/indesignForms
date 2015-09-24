@@ -21,23 +21,30 @@ var app = angular.module('iidentic', ['autocomplete']);
     };
 });*/
 
-app.controller('interface',['$scope', function ($scope) {
+app.controller('interface',['$scope','$location', function ($scope, $location) {
 
     $scope.showPopUp = false;
     $scope.typeName ='';
     $scope.cd = {};
+    $scope.job = {'status' : '-1' };
     $scope.showCreate = true;
     $scope.fields = window.fields;
-    $scope.ans = {};
+    $scope.ans = [];
+    $scope.requestId = null;
+    $scope.counter = 0;
+    $scope.poolTime = 60;  // wait for 1 minute for complite conversion.
 
 
-    console.log('Scope',$scope.fields );
+//    console.log('Scope',$scope.fields );
     function loadClient(id) {
 
         io.socket.get('/client/'+id, function (data, jwres){
             $scope.$apply(function(){
                 if(data){
+                    console.log(data);
                     $scope.client = data.client;
+
+                    console.log( $scope.client );
                 }
             });
         });
@@ -50,11 +57,12 @@ app.controller('interface',['$scope', function ($scope) {
     });
 
     $scope.initCli = function (id){
+        console.log(id);
         $scope.clientID = id;
     };
 
     $scope.loadData = function (ids){
-        console.log(ids);
+//        console.log(ids);
     };
 
     $scope.showCat = function(cat) {
@@ -63,27 +71,101 @@ app.controller('interface',['$scope', function ($scope) {
     
     $scope.collect = function() {
         console.log('SAVE');
+
         for(var i=0,l=$scope.fields.length; i<l; i++){
             var field = $scope.fields[i];
             if(field.selected) field.data.push(field.selected);
-            $scope.ans[field.name] = field.selected;
+            $scope.ans.push({'name': field.name, 'value': field.selected });
             delete field.updatedAt;
             delete field.createdAt;
-            delete field.selected;
         }
         var fields = JSON.parse( angular.toJson($scope.fields, false) );       // anguar add $$index keys in to model. to remove this
-        console.log( fields );
 
-        io.socket.put('/form/updateFields', fields,  function (data, jwres){
+
+        io.socket.put('/form/updateFields', {'fields' : fields },  function (data, jwres){
             console.log('saved', data);
-            //$scope.$apply(function(){
-            //    if(data){
-            //        $scope.client = data.client;
-            //    }
-            //});
+        });
+
+
+        var form = JSON.parse( angular.toJson($scope.ans, false) );       // anguar add $$index keys in to model. to remove this
+        console.log(typeId,catName);
+
+        var client = {
+                'id': $scope.clientID,
+                'dataName': window.catName,
+                'dataId': window.typeId
+            };
+
+        io.socket.post('/form/request', {'fields' : form, 'client' : client },  function (data, jwres){
+            $scope.$apply(function () {
+                $scope.queueID = data.id;
+            });
+            console.log(data.id);
+            if(data.id) startPooling( data.id );
         });
     };
 
+
+    $scope.moveback = function () {
+        window.history.back();
+    };
+
+    $scope.cancelPooling = function () {
+        console.log('cancel pooling');
+        clearInterval( window.poolTimer );
+    };
+
+    function startPooling(id){
+
+        function setStatus( data ) {
+
+            console.log('set status', data);
+            $scope.$apply(function() {
+                $scope.job.status = data.status;
+                $scope.job.comments = data.comments;
+                $scope.job.preview = data.previewPath;
+                $scope.job.filepath = data.outputPath;
+            });
+
+        }
+
+
+
+        $scope.counter = 0;
+        console.log('ID:', id);
+        $scope.requestId = id;
+
+        $scope.job.status = 'prepare';
+
+        setTimeout(function() {
+            var popUp = document.getElementById('statusPopUp');
+            window.scrollTo(0, popUp.offsetTop-100);
+        }, 0);
+
+
+        window.poolTimer =
+            window.setInterval(function(){
+
+                console.log('Ask for', $scope.requestId);
+
+                io.socket.get('/form/request/'+$scope.requestId,  function (data, jwres){
+                    console.log('recieved', data);
+
+                    setStatus( data );
+
+                    if('4' == data.status || '3' == data.status || $scope.counter == $scope.poolTime) {     // если 3-готово  или 4-ошибка или запарился опрашивать..
+                        console.log('call cancel');
+                        $scope.cancelPooling();
+                    }
+
+                    if ($scope.counter == $scope.poolTime) {
+                        alert('Время ожидания истекло, попробуйте позже');
+                    }
+                    $scope.counter++;
+                });
+
+            }, 1000);
+    }
     
     $scope.editData = function (cliId, type) {
 

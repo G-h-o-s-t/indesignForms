@@ -11,12 +11,16 @@
     .logoutLink{ margin-top: 25px; font-size: 12px; color: #000; }
     .canClick{ cursor: pointer; }
     .canClick:hover{ text-decoration: underline; }
-    .popUp{    position: absolute;  background-color: #fff;width: 500px;margin: auto;left: 50%;margin-left: -250px;padding: 20px;top: 100px; border-radius: 10px;}
+    .popUp{    position: absolute;  background-color: #fff;width: 500px; left: 50%;margin-left: -250px;padding: 20px;top: 100px; border-radius: 4px;}
+    .popUp.wide{ width: 768px; margin-left: -384px;}
     .head{ text-align: center;}
+
     .fileList{ list-style-type: none; text-align: center; padding: 0 }
     .fileList li{ font-size: 16px; line-height: 21px; margin: 5px 0;}
     h3{ font-weight: normal; margin: 20px 0 30px; }
     .fieldName{ font-size: 14px; margin: 20px 0 10px; }
+    .title{margin-top: 20px;}
+    .previewTab{ padding: 20px}
     textarea{width: 540px;padding: 6px 12px;
         min-height: 400px;
         background-color: #fff;
@@ -46,13 +50,18 @@
         -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
         box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
     }
+    .preview{ display: block; margin: 20px auto; border: 1px solid #e2e2e2; }
+    .downloadPath{ font-size:14px;  }
+    .smallTimer,.downTitle,.downloadPath{ font-size:14px;  }
+    .status{ font-size: 18px; color: #808080;}
+    .fieldsPlace{ margin: 0 0 20px;}
 </style>
 
 <div class="intWrap" ng-app="iidentic" ng-controller="interface">
     <header>
         <div class="icenter">
             <img src="/images/headLogo.png" alt="headLogo" width="141" class="iLogo"/>
-            <div class="userInfo fr" ng-init="initCli('<%=client._id%>')">
+            <div class="userInfo fr" ng-init="initCli('<%=client._id||client.id%>')">
                 <div><%= user.username %></div>
                 <div><%= client.name %>&nbsp;<%= client.details %></div>
             </div>
@@ -79,14 +88,28 @@
                 </div>
             </div>
         </div>
+        <button class="generic fl" ng-click="moveback()">Назад</button>
         <button class="generic fr" ng-click="collect()">Создать</button>
         <i class="clear"></i>
         <br/><br/><br/><br/><br/>
     </div>
 
+    <div id="statusPopUp" class="popUp wide" ng-show="job.status != '-1'">
+        <i class="closePopUp" ng-click="cancelPooling(); job.status='-1'">x</i>
+        <div class="title">Текущий статус: <span class="status">{{job.comments}}</span> <span class="smallTimer">( {{counter}}/{{poolTime}} )</span></div>
+        <i class="splitline"></i>
+        <div class="previewTab">
+            <div ng-show="!!job.filepath" class="downTitle">Скачать: <a class="downloadPath" href="{{job.filepath}}" title="{{job.filepath}}" target="_blank">{{job.filepath}}</a></div>
+            <img src="{{job.preview}}" alt="{{job.preview}}" class="preview" ng-show="!!job.preview" width="100%" />
+        </div>
+        <button class="generic fr" ng-click="cancelPooling(); job.status='-1'">закрыть</button>
+        <i class="clear"></i>
+    </div>
 </div>
 <script type="text/javascript">
-var fields = <%-JSON.stringify(fields) %>;
+var fields = <%-JSON.stringify(fields)%>;
+var catName = '<%-catName%>';
+var typeId = '<%-typeId%>';
 </script>
 <script type="text/javascript" src="/js/autocomplete.js"></script>
 <script type="text/javascript" src="/js/interface.js"></script>

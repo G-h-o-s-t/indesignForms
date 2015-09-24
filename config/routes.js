@@ -57,6 +57,9 @@ module.exports.routes = {
     'get /auth/:provider/callback': 'AuthController.callback',
     'get /auth/:provider/:action': 'AuthController.callback',
 
+    'get /form/request/:id': 'FormController.request',
+    'post /form/request': 'FormController.createRequest',
+
     'get /userinterface': 'interface.index',
     'get /client/:id': 'interface.client'
 
