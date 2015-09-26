@@ -171,11 +171,7 @@ app.controller('interface',['$scope', function ($scope) {
 
         console.log('type', type);
 
-        if(type.fields.length){
-            $scope.showCreate= true;
-        } else {
-            $scope.showCreate= false;
-        }
+        $scope.showCreate = !!type.fields.length;
 
 
         io.socket.get('/form/requestdocs/', {'clientId':cliId, 'catName':catName, 'typeId': type.id}, function (data, jwres) {

@@ -202,16 +202,33 @@ app.controller('admin',['$scope', function ($scope) {
         var types = [];
 
         for(var i=0,l=cat.types.length; i<l; i++){
-            types.push({'id':i, 'name': cat.types[i], 'fields': [] });
+
+            io.socket.post('/form/types', {'name': cat.types[i], 'fields': [] } , function (type, jwres){
+                    types.push( type );
+                    done();
+            });
+
         }
 
-        $scope.client.data.push(                                // create new data for client.
-            {
-            'name'  : cat.name,
-            'descr' : cat.descr,
-            'types' : types
+
+        function done(){
+            console.log('saved:',  types.length + 'vs' + cat.types.length );
+
+            if(types.length == cat.types.length) {          // если все типы сохранились, можем добавлять их в скоп
+                $scope.$apply(function () {
+
+                    $scope.client.data.push(                                // create new data for client.
+                        {
+                            'name'  : cat.name,
+                            'descr' : cat.descr,
+                            'types' : types
+                        }
+                    );
+
+                });
             }
-        );
+        }
+
     };
 
     $scope.removeCat = function(catName) {
@@ -291,7 +308,6 @@ app.controller('admin',['$scope', function ($scope) {
 
     $scope.fieldsChange = function(cat, type){
 
-console.log('CHANGE!!!!');
         $scope.showFieldsPopUp = true;
 
         setTimeout(function() {
@@ -301,7 +317,7 @@ console.log('CHANGE!!!!');
 
         var idx = $scope.client.data.indexOf(cat);
         var idx2 = $scope.client.data[idx].types.indexOf(type);
-        $scope.filedsIdx = [idx,idx2];
+        $scope.filedsIdx = [ idx, idx2 ];
 
         $scope.fieldsTitle = $scope.client.data[idx].descr + ' / '+$scope.client.data[idx].types[idx2].name;
         var fields = $scope.client.data[idx].types[idx2].fields;
@@ -370,9 +386,11 @@ console.log('CHANGE!!!!');
             ids.push(field.id);
 
             if(!$scope.fields[i].name){            $scope.fields[i].name = slug( $scope.fields[i].descr );}                     // generate description.
+
             io.socket.put('/admin/field', $scope.fields[i], function (resData) {
                 console.log('Saved:',resData);
             });
+
         }
 //        $scope.changedFieldsFor.fields = ids;
 
@@ -383,6 +401,9 @@ console.log('CHANGE!!!!');
 
         $scope.client.data[ idx[0] ].types[ idx[1] ].fields = ids;
 
+        io.socket.put('/admin/types/'+$scope.client.data[ idx[0] ].types[ idx[1]].id, {'fields':idx}, function (resData) {
+            console.log('Saved:',resData);
+        });
 //        console.log('cli dta:', $scope.client.data);
     };
 

@@ -15,6 +15,7 @@ module.exports = {
         });
     },
 
+    //  создает новый документ   get /form/create
     create: function (req, res) {
         if(!req.session || !req.session.user.id) { return res.redirect('/'); }
         if(!req.allParams().clientId ){ return res.badRequest('No id Specified');}
@@ -89,6 +90,30 @@ module.exports = {
             lastEl = null; fld= null;
         });
     },
+
+    createType: function (req, res) {
+        Types.create(req.allParams(), function (err, type) {
+            if (err) return res.serverError(err);
+            res.json(type);
+        });
+    },
+
+    changeType: function (req, res) {
+        if(!req.allParams().id) return res.serverError(err);
+
+        Types.findOne(req.allParams().id, function (err, type) {
+            if (err) return res.serverError(err);
+
+            type.fields = req.allParams().fields;
+
+            type.save(function (err, resp) {
+                if (err) return res.serverError(err);
+                res.json(resp);
+            });
+
+        });
+    },
+
 
     // request
     createRequest: function (req, res) {

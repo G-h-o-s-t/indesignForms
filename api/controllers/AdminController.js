@@ -87,6 +87,35 @@ module.exports = {
     // Client delete
     deleteClient: function (req, res) {
         if(!req.allParams().id) return res.serverError('No id specified');
+
+        Client.findOne(req.allParams().id, function (err, cli) {
+            if (err) return res.serverError(err);
+            if (!cli) return res.notFound(req.allParams().id);
+
+            var typeIds = [], fieldIds = [];
+
+            for(var i=0,l=cli.data.length; i<l; i++){
+                var cat = cli.data[i];
+
+                for(var n=0,ln=cat.types.length; n<ln; n++){
+                    typeIds.push( cat.types[n].id );
+                    fieldIds.concat( cat.types[n].fields );
+                }
+            }
+            console.log('types to delete:', typeIds);
+            console.log('fields to delete:', fieldIds);
+
+            Types.destroy(typeIds, function (err, types) {
+                if (err) return res.serverError(err);
+//                console.log('deleted:', types);
+            });
+            Fields.destroy(fieldIds, function (err, felds) {
+                if (err) return res.serverError(err);
+//                console.log('deleted:', felds);
+            });
+
+        });
+
         Client.destroy( req.allParams().id ).exec(function (err, cli) {
             if (err) return res.serverError(err);
             return res.json(cli);

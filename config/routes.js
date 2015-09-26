@@ -59,6 +59,8 @@ module.exports.routes = {
 
     'get /form/request/:id': 'FormController.request',
     'post /form/request': 'FormController.createRequest',
+    'post /form/types': 'FormController.createType',
+    'put /form/types/:id': 'FormController.changeType',
 
     'get /userinterface': 'interface.index',
     'get /client/:id': 'interface.client'
