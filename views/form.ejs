@@ -83,7 +83,7 @@
             <div class="inpLine" ng-repeat="field in fields">
                 <div class="fieldName">{{ field.descr }}</div>
                 <div class="inpt">
-                    <autocomplete ng-model="field.selected" data="field.data" ng-show="field.type=='text'"></autocomplete>
+                    <autocomplete attr-placeholder="{{field.placeholder}}" ng-model="field.selected" data="field.data" ng-show="field.type=='text'"></autocomplete>
                     <textarea ng-model="field.selected" cols="30" rows="10" ng-show="field.type=='textarea'"></textarea>
                 </div>
             </div>

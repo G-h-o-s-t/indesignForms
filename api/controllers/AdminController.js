@@ -181,6 +181,7 @@ module.exports = {
             field.name = req.allParams().name;
             field.descr = req.allParams().descr;
             field.type = req.allParams().type;
+            field.placeholder = req.allParams().placeholder;
             field.active = req.allParams().active;
             field.order = req.allParams().order;
 

@@ -392,7 +392,7 @@ app.controller('admin',['$scope', function ($scope) {
             var field = $scope.fields[i];
             ids.push(field.id);
 
-            if(!$scope.fields[i].name){            $scope.fields[i].name = slug( $scope.fields[i].descr );}                     // generate description.
+            if(!$scope.fields[i].name){  $scope.fields[i].name = slug( $scope.fields[i].descr );}                     // generate description.
 
             io.socket.put('/admin/field', $scope.fields[i], function (resData) {
                 console.log('Saved:',resData);

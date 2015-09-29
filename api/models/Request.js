@@ -10,6 +10,8 @@ module.exports = {
   attributes: {
       'status': 'string',
       'fields': 'array',
+      'document_type': 'string',
+      'document_name': 'string',
       'comments': 'string',
       'outputPath':'string',
       'previewPath':'string',
