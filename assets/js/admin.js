@@ -67,6 +67,7 @@ app.controller('admin',['$scope', function ($scope) {
         io.socket.get('/admin/clients', function (data, jwres){
             $scope.$apply(function(){
                 $scope.clients = data.clients;
+                console.log('Clients loaded', data.clients );
             });
         });
     }
@@ -243,29 +244,25 @@ app.controller('admin',['$scope', function ($scope) {
 
     $scope.removeCat = function(catName) {
         if($scope.client.data.length){
+
             for(var i=0,l=$scope.client.data.length; i<l; i++){
-                if($scope.client.data[i] && $scope.client.data[i].name === catName){ $scope.client.data.splice(i,1); }
+                if($scope.client.data[i] && $scope.client.data[i].name === catName){
+                    var cliTypes = $scope.client.data[i].types;
+
+                    for(var n=0,ln=cliTypes.length; n<ln; n++){
+                        io.socket.delete('/admin/types/'+cliTypes[n].id,function (data) {
+                            console.log('delete:', data);
+                        });
+                    }
+                    $scope.client.data.splice(i,1);
+                }
             }
         }
+
     };
 
 
     $scope.saveClient = function() {
-
-        function indexTypes(data) {
-            var idx = 0;
-                for(var i=0,l=data.length; i<l; i++){           // iterate over categories
-                    var cat = data[i];
-
-                    for(var n=0,tl = cat.types.length; n < tl; n++){      // iterate over types=
-                        cat.types[n].id = idx;
-                        ++idx;
-                    }
-                }
-            return data;
-        }
-
-        $scope.client.data = indexTypes($scope.client.data);
 
         console.log('Save client', $scope.client);
         var cli = JSON.parse( angular.toJson($scope.client, false) );       // anguar add $$index keys in to model. to remove this
@@ -283,6 +280,8 @@ app.controller('admin',['$scope', function ($scope) {
     };
 
     $scope.delClient = function() {
+        if( !confirm('Все поля, заполненные данные по клиенту будут удалены! Удалить '+$scope.client.name+'?') ) return;
+
         var cli = JSON.parse( angular.toJson($scope.client, false) );
         console.log('DELETE:', cli);
 
@@ -387,8 +386,6 @@ app.controller('admin',['$scope', function ($scope) {
     $scope.saveFields = function( cat, type ){
         $scope.showFieldsPopUp = false;
         var idx = $scope.filedsIdx;
-
-        console.log($scope.fields);
         var ids = [];
 
         for(var i=0,l=$scope.fields.length; i<l; i++){
@@ -411,10 +408,14 @@ app.controller('admin',['$scope', function ($scope) {
 
         $scope.client.data[ idx[0] ].types[ idx[1] ].fields = ids;
 
-        io.socket.put('/admin/types/'+$scope.client.data[ idx[0] ].types[ idx[1]].id, {'fields':idx}, function (resData) {
+        //console.log('data.:', $scope.client.data[ idx[0] ]);
+        //console.log('types:', $scope.client.data[ idx[0] ].types[ idx[1] ]);
+        //console.log('saving:', '/form/types/'+$scope.client.data[ idx[0] ].types[ idx[1] ].id);
+        //console.log('fields:',ids);
+
+        io.socket.put('/form/types/'+$scope.client.data[ idx[0] ].types[ idx[1]].id, {'fields':ids}, function (resData) {
             console.log('Saved:',resData);
         });
-//        console.log('cli dta:', $scope.client.data);
     };
 
 }]);

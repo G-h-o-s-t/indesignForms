@@ -138,9 +138,5 @@ module.exports.sockets = {
   ***************************************************************************/
   // transports: ["polling", "websocket"]
 
-  onConnect: function(session, socket) {
-      sails.log.verbose('>>>    socket user connected');
-      sails.sockets.blast('eventName', 'zzzzzzz');
-  }
 
 };

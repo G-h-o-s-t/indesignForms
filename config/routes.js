@@ -61,6 +61,7 @@ module.exports.routes = {
     'post /form/request': 'FormController.createRequest',
     'post /form/types': 'FormController.createType',
     'put /form/types/:id': 'FormController.changeType',
+    'delete /admin/types/:id':'AdminController.deleteType',
 
     'get /userinterface': 'interface.index',
     'get /client/:id': 'interface.client'

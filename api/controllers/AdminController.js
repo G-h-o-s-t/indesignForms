@@ -102,8 +102,8 @@ module.exports = {
                     fieldIds.concat( cat.types[n].fields );
                 }
             }
-            console.log('types to delete:', typeIds);
-            console.log('fields to delete:', fieldIds);
+            //console.log('types to delete:', typeIds);
+            //console.log('fields to delete:', fieldIds);
 
             Types.destroy(typeIds, function (err, types) {
                 if (err) return res.serverError(err);
@@ -121,6 +121,15 @@ module.exports = {
             return res.json(cli);
         });
     },
+
+    deleteType: function (req, res) {
+        if(!req.allParams().id) return res.serverError('No id to delete specified');
+        Types.destroy(req.allParams().id, function (err, result) {
+            if (err) return res.serverError(err);
+            return res.json(result);
+        });
+    },
+
 
     modifyClient: function (req, res) {
         if(!req.allParams().id) return res.badRequest('No field ID specified.');
