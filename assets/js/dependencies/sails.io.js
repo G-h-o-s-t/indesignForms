@@ -524,6 +524,7 @@ var parts=["source","protocol","authority","userInfo","user","password","host","
             // 'e.g. to send a GET request to Sails via WebSockets, run:'+ '\n' +
             // '`io.socket.get("/foo", function serverRespondedWith (body, jwr) { console.log(body); })`'+ '\n' +
           );
+            self.linkUp = true;
         });
         
         self.on('disconnect', function() {
@@ -534,6 +535,7 @@ var parts=["source","protocol","authority","userInfo","user","password","host","
             ' -> the server ' + (self.url ? self.url + ' ' : '') + 'was taken down' + '\n' +
             ' -> your browser lost internet connectivity');
           consolog('====================================');
+          self.linkUp = false;
         });
 
         self.on('reconnecting', function(numAttempts) {

@@ -4,7 +4,7 @@
 /**
  * Created by ghost on 23/04/15.
  */
-
+console.log('Loaded..');
 var app = angular.module('iidentic', ['autocomplete','angularMoment']);
 
 /*app.directive('myEnter', function () {
@@ -22,6 +22,7 @@ var app = angular.module('iidentic', ['autocomplete','angularMoment']);
 });*/
 
 app.controller('interface',['$scope', function ($scope) {
+    console.log('Controller starts');
     $scope.showPopUp = false;
     $scope.typeName ='';
     $scope.cd = {};
@@ -41,20 +42,25 @@ app.controller('interface',['$scope', function ($scope) {
         io.socket.get('/client/'+id, function (data, jwres){
             $scope.$apply(function(){
                 if(data){
-                    console.log(data);
                     $scope.client = data.client;
-
-                    console.log( $scope.client );
                 }
             });
         });
     }
 
 //  Load Data..
-    io.socket.on('connect', function(){
-        io.socket.connected = true;
-        loadClient($scope.clientID);
-    });
+
+    if(!io.socket.linkUp) {
+        console.log('trying to connect..',io.socket.linkUp );
+        io.socket.on('connect', function() {
+            loadClient($scope.clientID);
+        });
+    } else {
+        setTimeout(
+            function() {
+                loadClient($scope.clientID);
+            }, 0);
+    }
 
     $scope.initCli = function (id){
         console.log(id);
@@ -70,7 +76,6 @@ app.controller('interface',['$scope', function ($scope) {
     };
     
     $scope.collect = function() {
-        console.log('SAVE');
 
         for(var i=0,l=$scope.fields.length; i<l; i++){
             var field = $scope.fields[i];

@@ -36,11 +36,13 @@
         <a href="/logout" class="logoutLink fr">выход</a>
         <nav class="mainNavHoriz">
             <nav class="mainNav hide">
-                <li><a href="#">Визитная карточка</a></li>
-                <li><a href="#">Бланк</a></li>
-                <li><a href="#">Конверт</a></li>
-                <li><a href="#">Папка</a></li>
-                <li><a href="#">Элементы фирменного стиля</a></li>
+                <ul>
+                    <li><a href="#">Визитная карточка</a></li>
+                    <li><a href="#">Бланк</a></li>
+                    <li><a href="#">Конверт</a></li>
+                    <li><a href="#">Папка</a></li>
+                    <li><a href="#">Элементы фирменного стиля</a></li>
+                </ul>
             </nav>
         </nav>
     </div>
@@ -51,12 +53,14 @@
     </div>
     <div class="icenter">
         <nav class="mainNavVert">
-            <li ng-repeat="category in client.data">
-                <span class="canClick" ng-click="showCat(category)">{{category.descr}}</span>
-                <ul ng-show="category.expanded">
-                    <li ng-repeat="type in category.types" class="canClick" ng-click="editData(client.id, type, category.name)">{{type.name}}</li>
-                </ul>
-            </li>
+            <ol>
+                <li ng-repeat="category in client.data">
+                    <span class="canClick" ng-click="showCat(category)">{{category.descr}}</span>
+                    <ul ng-show="category.expanded">
+                        <li ng-repeat="type in category.types" class="canClick" ng-click="editData(client.id, type, category.name)">{{type.name}}</li>
+                    </ul>
+                </li>
+            </ol>
         </nav>
     </div>
 

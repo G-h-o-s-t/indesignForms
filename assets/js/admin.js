@@ -79,20 +79,30 @@ app.controller('admin',['$scope', function ($scope) {
         });
     }
 
-// Load Data..
-    io.socket.on('connect', function(){
-        io.socket.connected = true;
-        console.log('Socket Connected..',io.socket.connected );
-
-        loadUsers();
-        loadClients();
-
-        io.socket.get('/admin/catalog', function (data, jwres){
-            $scope.$apply(function(){
+    function getCatalog() {
+        io.socket.get('/admin/catalog', function (data, jwres) {
+            $scope.$apply(function () {
                 $scope.forms = data.catalog[0].forms;
             });
         });
-    });
+    }
+
+// Load Data..
+    if(!io.socket.linkUp) {
+        io.socket.on('connect', function () {
+            loadUsers();
+            loadClients();
+            getCatalog();
+        });
+
+    } else {
+        setTimeout(
+            function() {                // FF fix.
+                loadUsers();
+                loadClients();
+                getCatalog();
+            }, 0);
+    }
 
     $scope.addUser = function() {
         console.log('POST:', $scope.user);
