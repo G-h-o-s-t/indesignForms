@@ -35,7 +35,7 @@
             <img src="/images/headLogo.png" alt="headLogo" width="141" class="iLogo"/>
             <div class="userInfo fr" ng-init="initCli('<%=client._id||client.id%>')">
                 <div><%= user.username %></div>
-                <div><%= client.name %>&nbsp;<%= client.details %></div>
+                <div><%= client.name %>&nbsp;<%= client.details||'' %></div>
             </div>
         </div>
     </header>
