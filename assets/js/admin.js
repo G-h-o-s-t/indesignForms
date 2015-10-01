@@ -176,7 +176,7 @@ app.controller('admin',['$scope', function ($scope) {
     $scope.save =function(data){
       //console.log(  $scope.forms );
       //  console.log( io.socket.connected );
-        if(io.socket.connected){
+        if(io.socket.linkUp){
             io.socket.post('/admin/catalog', {'forms': $scope.forms}, function (res, jwres){
                 console.log('RES:', res);
             });
