@@ -330,6 +330,7 @@ app.controller('admin',['$scope', function ($scope) {
         $scope.filedsIdx = [ idx, idx2 ];
 
         $scope.fieldsTitle = $scope.client.data[idx].descr + ' / '+$scope.client.data[idx].types[idx2].name;
+        $scope.formId = $scope.client.data[idx].types[idx2].id;
         var fields = $scope.client.data[idx].types[idx2].fields;
 
         //console.log('найдены:', $scope.client.data[idx].types[idx2].fields);

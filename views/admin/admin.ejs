@@ -55,6 +55,7 @@
     .clientsLine:hover{ background: #ccc;}
     i.deleteUser{ font-style: normal; cursor: pointer; text-decoration: underline;}
     .smallField{ width: 50px;}
+    .typeNames{ padding: 20px; }
 </style>
 <script type="text/javascript">
 setTimeout(function sunrise () {
@@ -192,7 +193,7 @@ setTimeout(function sunrise () {
                                     <ul>
                                         <li class="smallLi" ng-repeat="type in cat.types track by $index">{{type.name}}
                                             <i class="delUser" ng-click="removeType(cat, type)">[удалить]</i>
-                                            <i class="delUser" ng-click="fieldsChange(cat, type)">[поля]</i>
+                                            <i class="delUser" ng-click="fieldsChange(cat, type)" >[поля]</i>
                                         </li>
                                     </ul>
                                 </li>
@@ -203,7 +204,7 @@ setTimeout(function sunrise () {
                         <i class="closePopUp" ng-click="showFieldsPopUp=false;">X</i>
                         <h2>Поля для заполнения:</h2>
                         <p>{{fieldsTitle}}</p>
-                        <div class="typeNames fl"><input type="text" ng-model=""/></div>
+                        <div class="typeNames fl">Идентификатор Indesign формы: <strong>{{formId}}</strong></div>
                         <div class="greyTab ">
                             <table width="100%">
                                 <tr>

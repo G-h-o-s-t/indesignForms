@@ -122,6 +122,7 @@ module.exports = {
         var model = {
             'fields' : req.allParams().fields,
             'client' : req.allParams().client,
+            'formId' : req.allParams().client.formId,
             'status' : '0',
             'comments': 'Just added',
             'previewPath' :'',

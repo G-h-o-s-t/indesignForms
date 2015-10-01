@@ -98,10 +98,10 @@ app.controller('interface',['$scope', function ($scope) {
         var client = {
                 'id': $scope.clientID,
                 'dataName': window.catName,
-                'dataId': window.typeId
+                'formId': window.typeId
             };
 
-        io.socket.post('/form/request', {'fields' : form, 'client' : client },  function (data, jwres){
+        io.socket.post('/form/request', {'fields' : form, 'client' : client},  function (data, jwres){
             $scope.$apply(function () {
                 $scope.queueID = data.id;
             });
