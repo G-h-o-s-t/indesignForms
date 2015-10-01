@@ -179,6 +179,7 @@ app.controller('admin',['$scope', function ($scope) {
         if(io.socket.linkUp){
             io.socket.post('/admin/catalog', {'forms': $scope.forms}, function (res, jwres){
                 console.log('RES:', res);
+                alert('сохранено.');
             });
         } else {
             alert('Не могу сохранить, сервер недоступен(');
