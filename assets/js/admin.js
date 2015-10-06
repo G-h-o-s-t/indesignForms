@@ -126,6 +126,7 @@ app.controller('admin',['$scope', function ($scope) {
             if(data.msg ==='user Added'){
                 $scope.$apply(function(){
                     $scope.users.push($scope.user);
+                    $scope.user = {};
                 });
             }
         });
