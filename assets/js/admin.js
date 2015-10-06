@@ -200,8 +200,17 @@ app.controller('admin',['$scope', function ($scope) {
         $scope.client = {users:[], data:[]};
     };
 
-    $scope.addUserToClient =function(user){
-        $scope.client.users.push({'id':user.id, 'name' : user.username });
+    $scope.addUserToClient =function(user) {
+        var users = JSON.parse( angular.toJson($scope.client.users, false)),
+            exists = false;
+
+        for(var i=0,l=users.length; i<l; i++){ if(users[i].id === user.id){ exists = true; } }
+
+        if(!exists){
+            $scope.client.users.push({'id':user.id, 'name' : user.username });
+        } else {
+            alert('Пользователь '+user.username+' уже добавлен.' );
+        }
         //console.log($scope.client);
     };
 
