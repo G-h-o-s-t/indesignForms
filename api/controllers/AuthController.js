@@ -173,7 +173,7 @@ var AuthController = {
     passport.callback(req, res, function (err, user, challenges, statuses) {
         if (err || !user) return tryAgain(challenges);
         if(req.allParams().action == 'register') {
-            return res.json({'msg':'user Added'});
+            return res.json(user);
         }
 
         if(req.allParams().act == 'login') {

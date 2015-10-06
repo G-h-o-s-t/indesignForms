@@ -106,7 +106,6 @@ app.controller('admin',['$scope', function ($scope) {
     }
 
     $scope.addUser = function() {
-        console.log('POST:', $scope.user);
         $scope.user.provider = 'local';
 
         io.socket.post('/auth/local/register', $scope.user, function (data, jwres){
@@ -121,10 +120,11 @@ app.controller('admin',['$scope', function ($scope) {
                     default: alert(data.err);
                 }
             }
-            console.log('recieve:', data);
+//            console.log('recieve:', data);
 
-            if(data.msg ==='user Added'){
+            if(data.id){
                 $scope.$apply(function(){
+                    $scope.user.id = data.id;
                     $scope.users.push($scope.user);
                     $scope.user = {};
                 });
