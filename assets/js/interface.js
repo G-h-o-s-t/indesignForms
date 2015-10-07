@@ -92,7 +92,7 @@ app.controller('interface',['$scope', function ($scope) {
         });
 
 
-        var form = JSON.parse( angular.toJson($scope.ans, false) );       // anguar add $$index keys in to model. to remove this
+        var form = JSON.parse( angular.toJson($scope.ans, false) );       // angular add $$index keys in to model. to remove this
         console.log(typeId,catName);
 
         var client = {
@@ -123,13 +123,23 @@ app.controller('interface',['$scope', function ($scope) {
     function startPooling(id){
 
         function setStatus( data ) {
+            function getLast(arr){ return arr[arr.length-1]; }
 
             console.log('set status', data);
+
+            if(data.previewPath){
+                var preview = '/files/' + getLast( data.previewPath.split('/') );
+            }
+
+            if(data.outputPath){
+                var filepath = '/files/' + getLast( data.outputPath.split('/') );
+            }
+
             $scope.$apply(function() {
                 $scope.job.status = data.status;
                 $scope.job.comments = data.comments;
-                $scope.job.preview = data.previewPath;
-                $scope.job.filepath = data.outputPath;
+                $scope.job.preview = preview||'';
+                $scope.job.filepath = filepath||'';
             });
 
         }
