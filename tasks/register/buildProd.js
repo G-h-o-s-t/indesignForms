@@ -6,7 +6,6 @@ module.exports = function (grunt) {
 		'cssmin',
 		'linkAssetsBuildProd',
 		'clean:build',
-		'copy:build',
-        'symlink:build'
+		'copy:build'
 	]);
 };
