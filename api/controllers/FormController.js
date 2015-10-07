@@ -154,8 +154,10 @@ module.exports = {
         var query = {
                 "client.id" : cid,
                 "client.dataName": catName||'',
-                "client.dataId" :typeId.toString()||''
+                "client.formId" :typeId.toString()||''
         };
+
+//        console.log(query);
 
         Request.find(query, function (err, records) {
             if (err) return res.serverError(err);

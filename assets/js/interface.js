@@ -102,6 +102,8 @@ app.controller('interface',['$scope', function ($scope) {
                 'formId': window.typeId
             };
 
+        console.log('FORM!:', client);
+
         io.socket.post('/form/request', {'fields' : form, 'client' : client},  function (data, jwres){
             $scope.$apply(function () {
                 $scope.queueID = data.id;
@@ -187,7 +189,6 @@ app.controller('interface',['$scope', function ($scope) {
         console.log('type', type);
 
         $scope.showCreate = !!type.fields.length;
-
 
         io.socket.get('/form/requestdocs/', {'clientId':cliId, 'catName':catName, 'typeId': type.id}, function (data, jwres) {
             console.log('recieved', data);
