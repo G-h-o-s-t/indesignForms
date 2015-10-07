@@ -12,9 +12,10 @@
 module.exports = function(grunt) {
 
 	grunt.config.set('clean', {
-		dev: ['.tmp/public/**'],
+		dev: ['.tmp/public/*','!.tmp/public/files/**' ],
 		build: ['www']
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-clean');
 };
+0

@@ -20,7 +20,7 @@ module.exports = function(grunt) {
 			files: [{
 				expand: true,
 				cwd: './assets',
-				src: ['**/*.!(coffee|less)'],
+				src: ['**/*.!(coffee|less)', '!**/files/**'],
 				dest: '.tmp/public'
 			}]
 		},
@@ -33,6 +33,5 @@ module.exports = function(grunt) {
 			}]
 		}
 	});
-
 	grunt.loadNpmTasks('grunt-contrib-copy');
 };

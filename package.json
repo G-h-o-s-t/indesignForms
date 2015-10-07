@@ -45,5 +45,8 @@
     "url": "git://github.com/ghost/indesignForms.git"
   },
   "author": "ghost",
-  "license": ""
+  "license": "",
+  "devDependencies": {
+    "grunt-contrib-symlink": "^0.3.0"
+  }
 }

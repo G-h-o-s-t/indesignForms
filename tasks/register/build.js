@@ -3,6 +3,8 @@ module.exports = function (grunt) {
 		'compileAssets',
 		'linkAssetsBuild',
 		'clean:build',
-		'copy:build'
+		'copy:build',
+		'symlink:build'
+
 	]);
 };
