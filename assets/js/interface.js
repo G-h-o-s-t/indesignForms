@@ -23,6 +23,7 @@ var app = angular.module('iidentic', ['autocomplete','angularMoment']);
 
 app.controller('interface',['$scope', function ($scope) {
     console.log('Controller starts');
+    $scope.filesPlace = '/files/';
     $scope.showPopUp = false;
     $scope.typeName ='';
     $scope.cd = {};
@@ -128,11 +129,11 @@ app.controller('interface',['$scope', function ($scope) {
             console.log('set status', data);
 
             if(data.previewPath){
-                var preview = '/files/' + getLast( data.previewPath.split('/') );
+                var preview = $scope.filesPlace + getLast( data.previewPath.split('/') );
             }
 
             if(data.outputPath){
-                var filepath = '/files/' + getLast( data.outputPath.split('/') );
+                var filepath = $scope.filesPlace + getLast( data.outputPath.split('/') );
             }
 
             $scope.$apply(function() {
@@ -143,7 +144,6 @@ app.controller('interface',['$scope', function ($scope) {
             });
 
         }
-
 
 
         $scope.counter = 0;
