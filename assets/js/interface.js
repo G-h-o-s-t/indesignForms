@@ -123,10 +123,11 @@ app.controller('interface',['$scope', function ($scope) {
         clearInterval( window.poolTimer );
     };
 
+    function getLast(arr){ return arr[arr.length-1]; }
+
     function startPooling(id){
 
         function setStatus( data ) {
-            function getLast(arr){ return arr[arr.length-1]; }
 
             console.log('set status', data);
 
@@ -192,6 +193,18 @@ app.controller('interface',['$scope', function ($scope) {
 
         io.socket.get('/form/requestdocs/', {'clientId':cliId, 'catName':catName, 'typeId': type.id}, function (data, jwres) {
             console.log('recieved', data);
+
+            for(var i=0,l=data.length; i<l; i++){
+                var obj = data[i];
+
+                if(obj.outputPath){
+                    obj.outputPath = $scope.filesPlace + getLast( obj.outputPath.split('/') );
+                }
+                if(obj.previewPath){
+                    obj.previewPath = $scope.filesPlace + getLast( obj.previewPath.split('/') );
+                }
+            }
+
             $scope.$apply(function() {
                 $scope.docs = data;
                 $scope.cd.id = cliId;
