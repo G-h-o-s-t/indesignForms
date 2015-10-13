@@ -1,7 +1,4 @@
 /**
- * Created by ghost on 19/09/15.
- */
-/**
  * Created by ghost on 23/04/15.
  */
 console.log('Loaded..');
